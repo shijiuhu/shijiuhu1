@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>测试</title>
+  </head>
+  <body>
+    <div>
+      <p>为了方便查找经常访问的网页，这里列举出来！</p>
+      <ol>
+        <li><a href="" id="home">回主页</a></li>
+        <li><a href="" target="_blank" class="chinaSoftOA">中软OA</a></li>
+        <li><a href="" target="_blank">牛客js</a></li>
+        <li><a href="" target="_blank">牛客面试每日一练</a></li>
+        <li><a href="" target="_blank">LeetCode每日一练</a></li>
+      </ol>
+    </div>
+    <form action="" name="testFrom">
+      <table>
+        <tr>
+          <td>上海</td>
+          <td>安徽</td>
+          <td>江苏</td>
+        </tr>
+      </table>
+    </form>
+  </body>
+  <script>
+    const btn1 = document.getElementById('#home')
+    console.log(btn1, 'btn1')
+    
+    const btn2 = document.getElementsByTagName('a')
+    console.log(btn2, 'btn2')
+
+    const btn3 = document.getElementsByClassName('.chinaSoftOA')
+    console.log(btn3, 'btn3')
+
+    const btn4 = document.getElementsByName('testFrom')
+    console.log(btn4, 'btn4')
+  </script>
+</html>
