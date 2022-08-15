@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/fruits/apple'
   },
   {
     path: '/login',
@@ -32,7 +32,7 @@ const routes = [
     },
     children: [
       {
-        path: '/apple',
+        path: 'apple',
         component: () => import('../components/Apple.vue'),
         meta: {
           title: '苹果',
@@ -40,7 +40,7 @@ const routes = [
         }
       },
       {
-        path: '/orange',
+        path: 'orange',
         component: () => import('../components/Orange.vue'),
         meta: {
           title: '橘子',

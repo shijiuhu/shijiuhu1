@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <button>{{$t('OrangeId')}} - {{$t('OrangeName')}}</button>
     <button @click="openNewPage">1.新打开网页</button>&nbsp;
     <button @click="gotoChinasoftOA">2.跳转至中软OA</button>&nbsp;
     <button @click="switchToApple">3.router中push</button>

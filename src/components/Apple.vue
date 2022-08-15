@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button>{{$t('AppleId')}} - {{$t('AppleName')}}</button>
     <button @click="switchLang">切换系统语言</button>
       {{ $t('baseInfo.name')}} - {{ $t('baseInfo.gender') }}
     <br>
@@ -10,7 +11,7 @@
 export default {
   name: "Apple",
   methods: {
-        switchLang() {
+    switchLang() {
       const langArray = this.$i18n.availableLocales || []
 
       // 如果只配置了一种语言，则无需切换

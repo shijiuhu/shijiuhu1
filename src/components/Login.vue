@@ -122,8 +122,8 @@ export default {
     } */
     .login {
       display: inline-block;
-      width: 1366px;
-      height: 653px;
+      width: 100vw;
+      height: 100vh;
       background-color: skyblue;
       overflow: hidden;
     }
