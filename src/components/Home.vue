@@ -29,11 +29,17 @@
         </tr>
       </tbody>
     </table>
+
+    <ul class="comments">
+      <li v-for="item in comments">
+        <img :src="item.imgUrl" :alt="item.content">
+        <span>{{item.content}}</span>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// import { env } from "process";
 import { request } from "../network/index.js";
 
 export default {
@@ -48,7 +54,14 @@ export default {
         "https://www.nowcoder.com/exam/interview/detail?questionClassifyId=0&questionId=2412474&questionJobId=156&type=1",
       leetCodePractice: "https://leetcode.cn/problems/palindrome-number/",
       localTestJson: [],
-      localEnvironment: ''
+      localEnvironment: '',
+      comments: [
+        {imgUrl: require('@/assets/img/comments/npsFeel1.png'), content: '强烈不推荐'},
+        {imgUrl: require('@/assets/img/comments/npsFeel2.png'), content: '不推荐'},
+        {imgUrl: require('@/assets/img/comments/npsFeel3.png'), content: '一般般'},
+        {imgUrl: require('@/assets/img/comments/npsFeel4.png'), content: '推荐'},
+        {imgUrl: require('@/assets/img/comments/npsFeel5.png'), content: '强烈推荐'}
+      ]
     };
   },
   methods: {
@@ -75,6 +88,24 @@ export default {
 </script>
 
 <style scoped>
+.comments {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 5px;
+  width: 400px;
+  background-color: skyblue;
+}
+
+.comments li {
+  flex: 1;
+  text-align: center;
+}
+
+.comments li span {
+  display: block;
+}
+
 a {
   text-decoration: none;
 }
