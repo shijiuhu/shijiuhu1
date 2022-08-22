@@ -34,14 +34,14 @@
     </table>
 
     <ul class="comments">
-      <li v-for="item in comments">
+      <li v-for="item in comments" :key="item">
         <img :src="item.imgUrl" :alt="item.content" />
         <span>{{ item.content }}</span>
       </li>
     </ul>
     <span @click="expandAll">
-      <button v-if="isExpandAll">展开所有</button>
-      <button v-else>收起所有</button>
+      <button v-if="isExpandAll">收起所有</button>
+      <button v-else>展开所有</button>
     </span>
     <tree :list="list" ref="tree"></tree>
   </div>

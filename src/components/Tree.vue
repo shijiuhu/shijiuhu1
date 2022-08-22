@@ -2,13 +2,13 @@
   <div v-for="item in treeList" :key="item">
     <label :for="item.name">
       <input type="checkbox" :id="item.name">
-      <span @click="isOpen(item)">{{item.name}}</span>
+      <span>{{item.name}}</span>
     </label>
     <span v-if="item.children && item.children.length" 
-      :class="{ 'triangleUp': itriangleUp, 'triangleDown': itriangleDown }" 
-      @click="toggleTriangle">
+      :class="{ 'triangleUp': item.triangleUp, 'triangleDown': item.triangleDown }" 
+      @click="toggleTriangle(item)">
     </span>
-    <div v-if="item.children && item.children.length" v-show="item.isOpened && itriangleUp" class="item-child">
+    <div v-if="item.children && item.children.length" v-show="item.triangleDown" class="item-child">
       <tree :list="item.children"></tree>
     </div>
   </div>
@@ -28,8 +28,6 @@ export default {
   data() {
     return {
       treeList: [],
-      itriangleUp: true,
-      itriangleDown: false
     }
   },
   created() {
@@ -39,15 +37,11 @@ export default {
     this.isListAll(true)
   },
   methods: {
-    // 是否展开该层节点
-    isOpen(item) {
-      item.isOpened = !item.isOpened
-    },
-
     // 展示节点
     listNode(array, flag) {
       for (let i = 0; i <= array.length - 1; i++) {
-        array[i].isOpened = flag
+        array[i].triangleUp = !flag
+        array[i].triangleDown = flag
         if(array[i].children && array[i].children.length) {
           this.listNode(array[i].children)
         }
@@ -59,9 +53,10 @@ export default {
       this.listNode(this.treeList, flag)
     },
 
-    toggleTriangle() {
-      this.itriangleUp = !this.itriangleUp
-      this.itriangleDown = !this.itriangleDown
+    // 切换向上向下箭头
+    toggleTriangle(item) {
+      item.triangleUp = !item.triangleUp
+      item.triangleDown = !item.triangleDown
     }
   }
 }
