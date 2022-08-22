@@ -65,23 +65,27 @@ export default {
 <style scoped>
 .triangleUp::before {
   content: '';
-  border: 8px solid transparent;
-  border-bottom-color: black;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid black;
   width: 0;
   height: 0;
+  font-size: 0;
   position: relative;
-  bottom: 14px;
+  bottom: 10px;
   left: 2px
 }
 
 .triangleDown::after {
   content: '';
-  border: 8px solid transparent;
-  border-top-color: black;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid black;
   width: 0;
   height: 0;
+  font-size: 0;
   position: relative;
-  top: 15px;
+  bottom: 1px;
   left: 2px
 }
 
