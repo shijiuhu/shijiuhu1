@@ -1,0 +1,16 @@
+vue面试题整理(2022-持续更新中...)（百度已搜一堆，我这里也只是做个备份，后面差不多了删除）
+https://blog.csdn.net/qq_45659769/article/details/119564784
+
+vue-devtools下载，安装，使用（但我实际安装不成功）
+https://blog.csdn.net/weihaifeng163/article/details/104010440
+
+树组件的封装（我基本借鉴于此，但功能不全，只是简单封装，仅供参考）
+https://www.pudn.com/news/62790662517cd20ea4c120f5.html
+
+vue v-for 遍历图片src的写法（element走马灯）（src静态引用图片要加require我已经知道了，这里再巩固下，防止自己忘了）
+https://blog.csdn.net/XiaoHuanhu/article/details/121162307
+
+Vue I18n介绍（有时间可以多学习一下中文国际化的一些东西）
+https://kazupon.github.io/vue-i18n/zh/introduction.html
+vue2配置i18n（我已实现，这个配置不全，但还是留下，可供参考）
+https://blog.csdn.net/u011109271/article/details/105095479

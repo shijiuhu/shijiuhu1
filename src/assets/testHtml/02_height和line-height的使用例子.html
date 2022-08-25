@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>innerHTML、outerHTML和innerText、outerHTML的区别</title>
+  <style>
+    html, body, div {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    
+    /* 可将下面height注释掉，就可看到height不设置时多行文字的展示样子 */
+    .bg0 {
+      width: 200px;
+      /* height: 45px; */
+      line-height: 100px;
+      background-color: red;
+      font-size: 10px;
+      word-wrap: break-word;
+    }
+
+    .bg1 {
+      width: 200px;
+      height: 10px;
+      background-color: green;
+    }
+
+    .bg2 {
+      width: 200px;
+      height: 45px;
+      background-color: yellow;
+    }
+
+    .bg3 {
+      width: 200px;
+      height: 55px;
+      background-color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg0">上海大学SHU(Shanghai University)是一所211大学</div>
+  <div class="bg1"></div>
+  <div class="bg2"></div>
+  <div class="bg3"></div>
+</body>
+
+</html>
