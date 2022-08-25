@@ -2,7 +2,7 @@
   <!-- <form action="/home" target="_blank" method="get"> -->
   <div class="login">
     <div class="dowebok">
-      <div class="logo">欢迎登陆杨涛管理系统！</div>
+      <div class="logo">欢迎登陆杨涛管理系统！用户名admin，密码1111</div>
       <div class="form-item">
         <input v-model="userName" type="text" autocomplete="off" placeholder="请输入账号"
         @keyup.enter="validUserName">
