@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dom元素的一些属性</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .title {
+      background-color: skyblue;
+    }
+    .content {
+      background-color: orange;
+    }
+    #description {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <!-- dom参考链接，链接中有些错误，以我自己这个为准，另外没有全试
+  https://www.cnblogs.com/jiaobaba/p/12312714.html -->
+  <div id="home" class="head common" title="我是首页" onclick="clickHome()" dir="ltr">
+    1<h2 class="title">大裁员</h2><!-- 世界形势不好啊 -->
+    <ul class="content">
+      <li>安徽</li>
+      <li>江苏</li>
+      <li>上海</li>
+    </ul>
+    <span id="description">我爱中国</span>
+  </div>
+  <a href="#">我是a1</a>
+
+  <script>
+    var homeDom = document.getElementById('home')
+    console.log(homeDom, '------------------------homeDom')
+    console.log(homeDom.nodeType, '----homeDom.nodeType')
+    console.log(homeDom.nodeName, '----homeDom.nodeName')
+    console.log(homeDom.nodeValue, '----homeDom.nodeValue')
+
+    console.log(document.nodeType, '----document.nodeType')
+    console.log(document.nodeName, '----document.nodeName')
+    console.log(document.nodeValue, '----document.nodeValue')
+
+    console.log(homeDom.attributes, '----homeDom.attributes')
+    for (let i = 0; i < homeDom.attributes.length; i++) {
+      console.log(homeDom.attributes[i], homeDom.attributes[i].nodeType, homeDom.attributes[i].nodeName, homeDom.attributes[i].nodeValue,
+      '----------homeDom.attributes['+i+']')
+    }
+    console.log(homeDom.hasChildNodes(), '----homeDom.hasChildNodes()')
+    for (let i = 0; i < homeDom.childNodes.length; i++) {
+      console.log(homeDom.childNodes[i], homeDom.childNodes[i].nodeType, homeDom.childNodes[i].nodeName, homeDom.childNodes[i].nodeValue,
+      '----------homeDom.childNodes['+i+']')
+    }
+    console.log(homeDom.firstChild, '----homeDom.firstChild')
+    console.log(homeDom.lastChild, '----homeDom.lastChild')
+    console.log(homeDom.ownerDocument, '----homeDom.ownerDocument')
+
+    var h2Dom = document.getElementsByClassName('title')[0]
+    console.log(h2Dom.nextSibling, '----h2Dom.nextSibling')
+    console.log(h2Dom.previousSibling, '----h2Dom.previousSibling')
+
+    console.log(h2Dom.parentNode, '----h2Dom.parentNode')
+    console.log(h2Dom.parentElement, '----h2Dom.parentElement')
+    console.log(h2Dom.previousElementSibling, '----h2Dom.previousElementSibling')
+    console.log(h2Dom.nextElementSibling, '----h2Dom.nextElementSibling')
+
+    console.log(homeDom.firstElementChild, '----homeDom.firstElementChild')
+    console.log(homeDom.lastElementChild, '----homeDom.lastElementChild')
+
+    console.log(homeDom.cloneNode(true), '----homeDom.cloneNode(true)')
+    console.log(homeDom.cloneNode(false), '----homeDom.cloneNode(false)')
+    console.log(homeDom.id, '----homeDom.id')
+    console.log(homeDom.title, '----homeDom.title')
+    console.log(homeDom.className, '----homeDom.className')
+    console.log(homeDom.dir, '----homeDom.dir')
+    console.log(homeDom.getAttribute('id'), '----homeDom.getAttribute("id")')
+    console.log(homeDom.getAttribute('title'), '----homeDom.getAttribute("title")')
+    console.log(homeDom.getAttribute('class'), '----homeDom.getAttribute("class")')
+    console.log(homeDom.getAttribute('dir'), '----homeDom.getAttribute("dir")')
+    console.log(homeDom.classList, '----homeDom.classList')
+    console.log(homeDom.classList.value, '----homeDom.classList.value')
+    for (let i = 0; i < homeDom.classList.length; i++) {
+      console.log(homeDom.classList[i], '----homeDom.classList['+i+']')
+    }
+
+    console.log(document.title, '----document.title')
+    console.log(document.URL, '----document.URL')
+    console.log(document.domain, '----document.domain')
+    console.log(document.referrer, '----document.referrer')
+    console.log(document.documentElement, '----document.documentElement')
+    console.log(document.body, '----document.body')
+    console.log(document.head, '----document.head')
+    console.log(document.readyState, '----document.readyState')
+    console.log(document.anchors, '----document.anchors')
+    console.log(document.forms, '----document.forms')
+    console.log(document.images, '----document.images')
+    console.log(document.links, '----document.links')
+
+    console.log(document.getElementsByTagName("*"), '----document.getElementsByTagName("*")')
+    console.log(document.getElementsByTagName("*")[8], '----document.getElementsByTagName("*")[8]')
+
+    console.log(homeDom.contains(homeDom.firstElementChild), '----homeDom.contains(homeDom.firstElementChild)')
+
+    function clickHome() {
+      console.log('点击了home节点！')
+    }
+  </script>
+</body>
+</html>
