@@ -1,0 +1,10 @@
+VSCode中html文件可安装插件，右击选择在浏览器中打开，扩展中搜索 open in browser 安装即可；
+更改默认浏览器：文件–>首选项—>设置，搜索open-in-browser.default，在设置框中输入Chrome
+参考链接：https://blog.csdn.net/DOUBLEchen151/article/details/114178271
+
+
+VSCode启用open with live server功能:在扩展中输入live server，点击安装即可。
+在设置中点击 《设置》，选择工具区->Live Server Config->Settings：Custom Browser选择chrome即可
+参考链接：https://blog.csdn.net/qq350490977/article/details/126101222
+
+
