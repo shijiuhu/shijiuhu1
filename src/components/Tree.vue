@@ -43,7 +43,7 @@ export default {
         array[i].triangleUp = !flag
         array[i].triangleDown = flag
         if(array[i].children && array[i].children.length) {
-          this.listNode(array[i].children)
+          this.listNode(array[i].children, flag)
         }
       }
     },
