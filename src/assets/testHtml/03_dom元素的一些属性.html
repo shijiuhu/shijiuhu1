@@ -69,6 +69,11 @@
     console.log(h2Dom.previousElementSibling, '----h2Dom.previousElementSibling')
     console.log(h2Dom.nextElementSibling, '----h2Dom.nextElementSibling')
 
+    for (let i = 0; i < homeDom.children.length; i++) {
+      console.log(homeDom.children[i], homeDom.children[i].nodeType, homeDom.children[i].nodeName, homeDom.children[i].nodeValue,
+      '----------homeDom.children['+i+']')
+    }
+
     console.log(homeDom.firstElementChild, '----homeDom.firstElementChild')
     console.log(homeDom.lastElementChild, '----homeDom.lastElementChild')
 
@@ -100,6 +105,7 @@
     console.log(document.forms, '----document.forms')
     console.log(document.images, '----document.images')
     console.log(document.links, '----document.links')
+    console.log(document.cookie, '----document.cookie')
 
     console.log(document.getElementsByTagName("*"), '----document.getElementsByTagName("*")')
     console.log(document.getElementsByTagName("*")[8], '----document.getElementsByTagName("*")[8]')
