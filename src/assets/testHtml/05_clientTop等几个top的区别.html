@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>top、clientTop、scrollTop、offsetTop的区别示意图</title>
+  <style>
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <img src="../img/几个top的区别示意图.jpg" alt="示意图无法加载">
+  <div>
+    <a href="https://www.cnblogs.com/zhouxuezheng/p/13857643.html" target="blank">
+      参考链接：https://www.cnblogs.com/zhouxuezheng/p/13857643.html
+    </a>
+    <br>
+    <a href="https://blog.csdn.net/qq_26909801/article/details/89139440" target="blank">
+      其他参考链接：https://blog.csdn.net/qq_26909801/article/details/89139440
+    </a>
+  </div>
+  <br>
+  <br>scrollHeight: 获取对象的滚动高度。
+  <br>scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离
+  <br>scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离
+  <br>scrollWidth:获取对象的滚动宽度
+  <br>offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度
+  <br>offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置
+  <br>offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
+  <br>event.clientX 相对文档的水平座标
+  <br>event.clientY 相对文档的垂直座标
+  <br>event.offsetX 相对容器的水平坐标
+  <br>event.offsetY 相对容器的垂直坐标
+  <br>document.documentElement.scrollTop 垂直方向滚动的值
+  <br>event.clientX+document.documentElement.scrollTop 相对文档的水平座标+垂直方向滚动的量
+
+  <div style="color:red; margin-bottom: 40px;">
+    clientHeight = 内容实际高度 + 上下内边距。<br>
+    offsetHeight = height + padding + border，多个border<br>
+    scrollHeight和元素本身的高度完全无关，是浏览器根据元素padding和子元素的盒模型高度累加计算出来的。<br>
+    scrollHeight计算高度时，会累加上以自身为定位祖先元素的所有后代定位元素的可视高度。
+  </div>
+</body>
+</html>
