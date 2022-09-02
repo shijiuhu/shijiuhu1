@@ -1,15 +1,15 @@
 <template>
-  <div v-for="item in treeList" :key="item">
-    <label :for="item.name">
-      <input type="checkbox" :id="item.name">
-      <span>{{item.name}}</span>
+  <div>
+    <label :for="list.name">
+      <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
+      <span>{{list.name}}</span>
     </label>
-    <span v-if="item.children && item.children.length" 
-      :class="{ 'triangleUp': item.triangleUp, 'triangleDown': item.triangleDown }" 
-      @click="toggleTriangle(item)">
+    <span v-if="hasChildren" 
+      :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
+      @click="toggleTriangle(list)">
     </span>
-    <div v-if="item.children && item.children.length" v-show="item.triangleDown" class="item-child">
-      <tree :list="item.children"></tree>
+    <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
+      <tree v-for="item in list.children" :list="item" :key="item"></tree>
     </div>
   </div>
 </template>
@@ -19,44 +19,56 @@ export default {
   name: 'Tree',
   props: {
     list: {
-      type: Array,
+      type: Object,
       default() {
-        return []
+        return {}
       }
     }
   },
-  data() {
-    return {
-      treeList: [],
-    }
-  },
   created() {
-    this.treeList = JSON.parse(JSON.stringify(this.list))
-
     // 默认初始时展开页面
     this.isListAll(true)
   },
+  computed: {
+    hasChildren() {
+      return this.list.children && this.list.children.length
+    }
+  },
   methods: {
+    // 是否展示所有
+    isListAll(flag) {
+      this.listNode(this.list, flag)
+    },
+
     // 展示节点
-    listNode(array, flag) {
-      for (let i = 0; i <= array.length - 1; i++) {
-        array[i].triangleUp = !flag
-        array[i].triangleDown = flag
-        if(array[i].children && array[i].children.length) {
-          this.listNode(array[i].children, flag)
+    listNode(list, flag) {
+      if(list.children && list.children.length) {
+        list.isOpen = flag
+        for(let i = 0; i <= list.children.length - 1; i++) {
+          this.listNode(list.children[i], flag)
         }
       }
     },
 
-    // 是否展示所有
-    isListAll(flag) {
-      this.listNode(this.treeList, flag)
-    },
-
     // 切换向上向下箭头
     toggleTriangle(item) {
-      item.triangleUp = !item.triangleUp
-      item.triangleDown = !item.triangleDown
+      item.isOpen = !item.isOpen
+    },
+
+    // 全选或全取消当前节点及子节点，调用子节点
+    isSelectedAll(list) {
+      list.isChecked = !list.isChecked
+      this.isSelectedAllChildren(list, list.isChecked)
+    },
+
+    // 子节点全选或全取消处理
+    isSelectedAllChildren(list, flag) {
+      if(list.children && list.children.length) {
+        for(let i = 0; i <= list.children.length - 1; i++) {
+          list.children[i].isChecked = flag
+          this.isSelectedAllChildren(list.children[i], flag)
+        }
+      }
     }
   }
 }

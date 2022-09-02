@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>为了方便查找经常访问的网页，这里列举出来！</span>
+    <!-- <span>为了方便查找经常访问的网页，这里列举出来！</span>
     <ol>
       <li><a :href="backToHome">回主页</a></li>
       <li><a :href="chinaSoftOA" target="_blank">中软OA</a></li>
@@ -38,7 +38,7 @@
         <img :src="item.imgUrl" :alt="item.content" />
         <span>{{ item.content }}</span>
       </li>
-    </ul>
+    </ul> -->
     <span @click="expandAll">
       <button v-if="isExpandAll">收起所有</button>
       <button v-else>展开所有</button>
@@ -89,62 +89,65 @@ export default {
           content: "强烈推荐",
         },
       ],
-      list: [
-        {
-          name: "安徽",
-          children: [
-            { name: "合肥" },
-            {
-              name: "马鞍山",
-              children: [
-                { name: "雨山区" },
-                { name: "花山区" },
-                {
-                  name: "博望区",
-                  children: [
-                    { name: "博望镇" },
-                    { name: "丹阳镇" },
-                    { name: "新市镇" },
-                  ],
-                },
-                {
-                  name: "当涂县",
-                  children: [
-                    { name: "湖阳镇" },
-                    { name: "姑孰镇" },
-                    { name: "太白镇" },
-                  ],
-                },
-                { name: "含山县" },
-                { name: "和县" },
-              ],
-            },
-            { name: "滁州" },
-          ],
-        },
-        {
-          name: "江苏",
-          children: [
-            {
-              name: "南京",
-              children: [
-                { name: "江宁区" },
-                { name: "玄武区" },
-                { name: "雨花台区" },
-                { name: "浦口区" },
-                { name: "高淳区" },
-              ],
-            },
-            { name: "常州" },
-            { name: "苏州" },
-            { name: "南通" },
-          ],
-        },
-        {
-          name: "浙江",
-          children: [{ name: "杭州" }, { name: "宁波" }],
-        },
-      ],
+      list: {
+        name: "中国",
+        children: [
+          {
+            name: "安徽",
+            children: [
+              { name: "合肥" },
+              {
+                name: "马鞍山",
+                children: [
+                  { name: "雨山区" },
+                  { name: "花山区" },
+                  {
+                    name: "博望区",
+                    children: [
+                      { name: "博望镇" },
+                      { name: "丹阳镇" },
+                      { name: "新市镇" },
+                    ],
+                  },
+                  {
+                    name: "当涂县",
+                    children: [
+                      { name: "湖阳镇" },
+                      { name: "姑孰镇" },
+                      { name: "太白镇" },
+                    ],
+                  },
+                  { name: "含山县" },
+                  { name: "和县" },
+                ],
+              },
+              { name: "滁州" },
+            ],
+          },
+          {
+            name: "江苏",
+            children: [
+              {
+                name: "南京",
+                children: [
+                  { name: "江宁区" },
+                  { name: "玄武区" },
+                  { name: "雨花台区" },
+                  { name: "浦口区" },
+                  { name: "高淳区" },
+                ],
+              },
+              { name: "常州" },
+              { name: "苏州" },
+              { name: "南通" },
+            ],
+          },
+          {
+            name: "浙江",
+            children: [{ name: "杭州" }, { name: "宁波" }],
+          },
+        ],
+      },
       isExpandAll: true,
     };
   },
