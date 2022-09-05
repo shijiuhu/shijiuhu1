@@ -26,6 +26,9 @@ export default {
     }
   },
   created() {
+
+    this.orderByName(this.list)
+
     // 默认初始时展开页面
     this.isListAll(true)
   },
@@ -67,6 +70,22 @@ export default {
         for(let i = 0; i <= list.children.length - 1; i++) {
           list.children[i].isChecked = flag
           this.isSelectedAllChildren(list.children[i], flag)
+        }
+      }
+    },
+
+    // 结构树重新排序
+    orderByName(list) {
+      const array = list.children
+      if(array && array.length) {
+        // 1.先本层比较排序
+        array.sort((a, b) => {
+          return a.name.localeCompare(b.name)
+        })
+
+        // 2.再循环遍历子节点排序
+        for(let i = 0; i <= array.length - 1; i++) {
+          this.orderByName(array[i])
         }
       }
     }
