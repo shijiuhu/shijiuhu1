@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <span>为了方便查找经常访问的网页，这里列举出来！</span>
+    <span>为了方便查找经常访问的网页，这里列举出来！</span>
     <ol>
       <li><a :href="backToHome">回主页</a></li>
       <li><a :href="chinaSoftOA" target="_blank">中软OA</a></li>
@@ -9,12 +9,10 @@
       <li><a :href="leetCodePractice" target="_blank">LeetCode每日一练</a></li>
     </ol>
     <ol>
-      <li><a href="#" @click="questionNaire">调查问卷</a></li>
-      <li>
-        <a href="#" @click="getEnvironment">获取本地开发或生产环境：</a
-        >{{ localEnvironment }}
-      </li>
-      <li><a href="#" @click="getLocalJson">获取本地json文件</a></li>
+      <li><span @click="questionNaire">调查问卷</span></li>
+      <li><span @click="provinceTree">省市树</span></li>
+      <li><span @click="getEnvironment">获取本地开发或生产环境：</span>{{ localEnvironment }}</li>
+      <li><span @click="getLocalJson">获取本地json文件</span></li>
     </ol>
     <table>
       <thead>
@@ -38,7 +36,7 @@
         <img :src="item.imgUrl" :alt="item.content" />
         <span>{{ item.content }}</span>
       </li>
-    </ul> -->
+    </ul>
     <span @click="expandAll">
       <button v-if="isExpandAll">收起所有</button>
       <button v-else>展开所有</button>
@@ -176,6 +174,9 @@ export default {
           console.log(err, "-----------err");
         });
     },
+    provinceTree() {
+      this.$router.push("/provinceTree");
+    }
   },
 };
 </script>
@@ -210,5 +211,10 @@ table {
 th,
 td {
   border: 1px solid blue;
+}
+
+ol li span {
+  color: blue;
+  cursor: pointer;
 }
 </style>

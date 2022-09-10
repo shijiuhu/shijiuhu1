@@ -52,6 +52,14 @@ const routes = [
   {
     path: '/test',
     component: () => import('../components/Test.vue')
+  },
+  {
+    path: '/provinceTree',
+    component: () => import('../components/ProvinceTree.vue'),
+    meta: {
+      title: '省市树',
+      keepAlive: true
+    }
   }
 ]
 

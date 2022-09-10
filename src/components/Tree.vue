@@ -9,7 +9,7 @@
       @click="toggleTriangle(list)">
     </span>
     <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
-      <tree v-for="item in list.children" :list="item" :key="item"></tree>
+      <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     }
   },
   created() {
-
+    // 将原值按名称重新排列
     this.orderByName(this.list)
 
     // 默认初始时展开页面
@@ -60,6 +60,9 @@ export default {
 
     // 全选或全取消当前节点及子节点，调用子节点
     isSelectedAll(list) {
+      // 选中同时向父组件传递省市树名称
+      this.showProvinceName(list.name)
+
       list.isChecked = !list.isChecked
       this.isSelectedAllChildren(list, list.isChecked)
     },
@@ -72,6 +75,11 @@ export default {
           this.isSelectedAllChildren(list.children[i], flag)
         }
       }
+    },
+
+    // 向父取件传递省市树名称
+    showProvinceName(name) {
+      this.$emit('showProvinceName', name)
     },
 
     // 结构树重新排序
