@@ -12,6 +12,7 @@
       <div class="right">
         省市名称：<input type="text" class="provinceName" v-model="provinceName">
         <input type="button" class="provinceNameBaidu" value="百度一下" @click="provinceNameBaidu">
+        {{ data }}
       </div>
     </div>
   </div>
@@ -19,6 +20,7 @@
 
 <script>
 import Tree from './Tree.vue'
+import { request } from '../network/index.js';
 
 export default {
   name: 'ProvinceTree',
@@ -88,6 +90,7 @@ export default {
         ],
       },
       isExpandAll: true,
+      data: ''
     }
   },
   methods: {
@@ -104,7 +107,14 @@ export default {
 
     // 百度一下省市树名称
     provinceNameBaidu() {
-      window.open(`https://www.baidu.com/s?wd=${this.provinceName}`)  
+      request.get('/provinceTree/s?wd='+this.provinceName).then(res=>{
+        this.data = res.data
+        console.log(res, '---------res')
+      }).catch(err=> {
+        this.data = err
+        console.log(err, '---------err')
+      })
+      // window.open(`https://www.baidu.com/s?wd=${this.provinceName}`)  
     }
   }
 }
