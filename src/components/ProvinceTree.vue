@@ -12,7 +12,9 @@
       <div class="right">
         省市名称：<input type="text" class="provinceName" v-model="provinceName">
         <input type="button" class="provinceNameBaidu" value="百度一下" @click="provinceNameBaidu">
-        {{ data }}
+        <!-- {{ data }} -->
+        <br>
+        <iframe name="provinceTree" :src="baiduUrl" height="100%" width="100%" noResize="yes"></iframe>
       </div>
     </div>
   </div>
@@ -90,7 +92,8 @@ export default {
         ],
       },
       isExpandAll: true,
-      data: ''
+      data: '',
+      baiduUrl: 'http://localhost:8080/provinceTree'
     }
   },
   methods: {
@@ -107,6 +110,7 @@ export default {
 
     // 百度一下省市树名称
     provinceNameBaidu() {
+      this.baiduUrl = `http://localhost:8080/provinceTree/s?wd=${this.provinceName}`
       request.get('/provinceTree/s?wd='+this.provinceName).then(res=>{
         this.data = res.data
         console.log(res, '---------res')
@@ -135,12 +139,12 @@ export default {
 }
 
 .left {
-  width: 30%;
+  width: 15%;
   background-color: rgb(238, 220, 56);
 }
 
 .right {
-  width: 70%;
+  width: 85%;
   background-color: rgb(122, 168, 228);
 }
 
