@@ -1,10 +1,10 @@
 <template>
   <div>
-    <label :for="list.name">
+    <label :for="list.name" v-if="list.isShow">
       <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
       <span>{{list.name}}</span>
     </label>
-    <span v-if="hasChildren" 
+    <span v-if="hasChildren && list.isShow" 
       :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
       @click="toggleTriangle(list)">
     </span>
@@ -45,6 +45,8 @@ export default {
 
     // 展示节点
     listNode(list, flag) {
+      list.isShow = true
+      list.isMatchSearchContent = true
       if(list.children && list.children.length) {
         list.isOpen = flag
         for(let i = 0; i <= list.children.length - 1; i++) {
@@ -73,6 +75,52 @@ export default {
         for(let i = 0; i <= list.children.length - 1; i++) {
           list.children[i].isChecked = flag
           this.isSelectedAllChildren(list.children[i], flag)
+        }
+      }
+    },
+
+    // 模糊查询符合要求的省市名称
+    searchContent(searchContent) {
+      this.matchSearchContent(this.list, searchContent)
+      this.setShowNode(this.list)
+    },
+
+    // 循环遍历，找到符合要求的就设置isMatchSearchContent属性为true
+    matchSearchContent(list, searchContent) {
+      // 1.先本层设置
+      if (list.name.includes(searchContent)) {
+        list.isMatchSearchContent = true
+      } else {
+        list.isMatchSearchContent = false
+      }
+
+      // 2.再子节点循环遍历
+      if (list.children && list.children.length) {
+        for (let i = 0; i <= list.children.length - 1; i++) {
+          this.matchSearchContent(list.children[i], searchContent)
+        }
+      }
+    },
+
+    // 如果自身或子节点有符合要求的匹配就返回为true
+    isShowNode(list) {
+      if (list.isMatchSearchContent) {
+        return true
+      } else if (list.children && list.children.length) {
+        for (let i = 0; i <= list.children.length - 1; i++) {
+          if (this.isShowNode(list.children[i])) {
+            return true
+          }
+        }
+      }
+    },
+
+    // 为每层都设置是否展示节点的属性，并最终用于页面展示
+    setShowNode(list) {
+      list.isShow = !!this.isShowNode(list) // 这里要双取反，方法返回为undefined实际就应置为false
+      if (list.children && list.children.length) {
+        for (let i = 0; i <= list.children.length - 1; i++) {
+          this.setShowNode(list.children[i])
         }
       }
     },

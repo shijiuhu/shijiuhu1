@@ -3,10 +3,14 @@
     <div class="title">省市树</div>
     <div class="content">
       <div class="left">
-        <span @click="expandAll">
+        <span class="expandAll" @click="expandAll">
           <button v-if="isExpandAll">收起所有</button>
           <button v-else>展开所有</button>
         </span>
+        <div>
+          <input type="text" class="searchContent" placeholder="请输入关键字" ref="searchContent" @keyup.enter="searchContent">
+          <input type="button" value="查询" @click="searchContent">
+        </div>
         <tree :list="list" ref="tree" @showProvinceName="showProvinceName"></tree>
       </div>
       <div class="right">
@@ -119,6 +123,11 @@ export default {
         console.log(err, '---------err')
       })
       // window.open(`https://www.baidu.com/s?wd=${this.provinceName}`)  
+    },
+
+    // 查找符合要求的省市名称
+    searchContent() {
+      this.$refs.tree.searchContent(this.$refs.searchContent.value.trim())
     }
   }
 }
@@ -139,13 +148,24 @@ export default {
 }
 
 .left {
-  width: 15%;
+  width: 20%;
   background-color: rgb(238, 220, 56);
 }
 
 .right {
-  width: 85%;
+  width: 80%;
   background-color: rgb(122, 168, 228);
+}
+
+.expandAll {
+  display: inline-block;
+  margin: 2px 0 0 5px;
+}
+
+.searchContent {
+  display: inline-block;
+  width: 120px;
+  margin: 0 5px;
 }
 
 .provinceName {
