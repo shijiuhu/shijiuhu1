@@ -8,7 +8,7 @@
       :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
       @click="toggleTriangle(list)">
     </span>
-    <i class="icon icon-trash"></i>
+    <i v-if="list.isShow" class="fa fa-trash"></i>
     <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
       <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
     </div>
@@ -151,7 +151,10 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/fontAwesome/css/font-awesome.min.css";
+/* 我这里既可以引用下载到本地的，又可以引用安装的组件包，都做了处理；
+也可以在main.js中引用：import 'font-awesome/css/font-awesome.min.css'，那样的话就是全局的 */
+/* @import "../assets/fontAwesome/css/font-awesome.min.css"; */
+@import "font-awesome/css/font-awesome.min.css";
 
 .triangleUp::before {
   content: '';
