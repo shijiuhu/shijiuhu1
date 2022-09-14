@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="list.name">
     <div class="treeNode">
       <label :for="list.name" v-if="list.isShow">
         <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
@@ -9,7 +9,7 @@
         :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
         @click="toggleTriangle(list)">
       </span>
-      <i v-if="list.isShow" class="iconTree fa fa-trash"></i>
+      <i v-if="list.isShow" class="iconTree fa fa-trash" @click="deleteNode(list)"></i>
     </div>
     <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
       <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
@@ -90,8 +90,10 @@ export default {
 
     // 循环遍历，找到符合要求的就设置isMatchSearchContent属性为true
     matchSearchContent(list, searchContent) {
+      // 删除节点操作后节点没有name属性，因此这里增加判断是否为空
+      const nodeName = list && list.name
       // 1.先本层设置
-      if (list.name.includes(searchContent)) {
+      if (nodeName && nodeName.includes(searchContent)) {
         list.isMatchSearchContent = true
       } else {
         list.isMatchSearchContent = false
@@ -124,6 +126,21 @@ export default {
       if (list.children && list.children.length) {
         for (let i = 0; i <= list.children.length - 1; i++) {
           this.setShowNode(list.children[i])
+        }
+      }
+    },
+
+    // 删除选中节点
+    deleteNode(list) {
+      const hasChild = list.children && list.children.length
+      if (hasChild) {
+        if (window.confirm('删除此节点将连带删除子节点，确定吗？')) {
+          delete list.name
+          delete list.children
+        }
+      } else {
+        if (window.confirm('确定删除此节点吗？')) {
+          delete list.name
         }
       }
     },
