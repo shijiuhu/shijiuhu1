@@ -14,6 +14,7 @@
       <li><span @click="getEnvironment">获取本地开发或生产环境：</span>{{ localEnvironment }}</li>
       <li><span @click="getLocalJson">获取本地json文件</span></li>
     </ol>
+    
     <table>
       <thead>
         <tr>
@@ -37,23 +38,14 @@
         <span>{{ item.content }}</span>
       </li>
     </ul>
-    <span @click="expandAll">
-      <button v-if="isExpandAll">收起所有</button>
-      <button v-else>展开所有</button>
-    </span>
-    <tree :list="list" ref="tree"></tree>
   </div>
 </template>
 
 <script>
 import { request } from "../network/index.js";
-import Tree from "./Tree.vue";
 
 export default {
   name: "Home",
-  components: {
-    Tree,
-  },
   data() {
     return {
       backToHome: "http://localhost:8080/home",
@@ -87,73 +79,9 @@ export default {
           content: "强烈推荐",
         },
       ],
-      list: {
-        name: "中国",
-        children: [
-          {
-            name: "安徽",
-            children: [
-              { name: "合肥" },
-              {
-                name: "马鞍山",
-                children: [
-                  { name: "雨山区" },
-                  { name: "花山区" },
-                  {
-                    name: "博望区",
-                    children: [
-                      { name: "博望镇" },
-                      { name: "丹阳镇" },
-                      { name: "新市镇" },
-                    ],
-                  },
-                  {
-                    name: "当涂县",
-                    children: [
-                      { name: "湖阳镇" },
-                      { name: "姑孰镇" },
-                      { name: "太白镇" },
-                    ],
-                  },
-                  { name: "含山县" },
-                  { name: "和县" },
-                ],
-              },
-              { name: "滁州" },
-            ],
-          },
-          {
-            name: "江苏",
-            children: [
-              {
-                name: "南京",
-                children: [
-                  { name: "江宁区" },
-                  { name: "玄武区" },
-                  { name: "雨花台区" },
-                  { name: "浦口区" },
-                  { name: "高淳区" },
-                ],
-              },
-              { name: "常州" },
-              { name: "苏州" },
-              { name: "南通" },
-            ],
-          },
-          {
-            name: "浙江",
-            children: [{ name: "杭州" }, { name: "宁波" }],
-          },
-        ],
-      },
-      isExpandAll: true,
     };
   },
   methods: {
-    expandAll() {
-      this.isExpandAll = !this.isExpandAll;
-      this.$refs.tree.isListAll(this.isExpandAll);
-    },
     questionNaire() {
       this.$router.push("/questionNaire");
       console.log("跳转到调查问卷页面");
