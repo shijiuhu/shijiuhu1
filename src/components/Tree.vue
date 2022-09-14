@@ -8,6 +8,7 @@
       :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
       @click="toggleTriangle(list)">
     </span>
+    <i class="icon icon-trash"></i>
     <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
       <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
     </div>
@@ -150,6 +151,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/fontAwesome/css/font-awesome.min.css";
+
 .triangleUp::before {
   content: '';
   border-left: 8px solid transparent;
