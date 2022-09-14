@@ -1,14 +1,16 @@
 <template>
   <div>
-    <label :for="list.name" v-if="list.isShow">
-      <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
-      <span>{{list.name}}</span>
-    </label>
-    <span v-if="hasChildren && list.isShow" 
-      :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
-      @click="toggleTriangle(list)">
-    </span>
-    <i v-if="list.isShow" class="fa fa-trash"></i>
+    <div class="treeNode">
+      <label :for="list.name" v-if="list.isShow">
+        <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
+        <span>{{list.name}}</span>
+      </label>
+      <span v-if="hasChildren && list.isShow" 
+        :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
+        @click="toggleTriangle(list)">
+      </span>
+      <i v-if="list.isShow" class="iconTree fa fa-trash"></i>
+    </div>
     <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
       <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
     </div>
@@ -156,6 +158,10 @@ export default {
 /* @import "../assets/fontAwesome/css/font-awesome.min.css"; */
 @import "font-awesome/css/font-awesome.min.css";
 
+.treeNode:hover {
+  background-color: #f00;
+}
+
 .triangleUp::before {
   content: '';
   border-left: 8px solid transparent;
@@ -180,6 +186,16 @@ export default {
   position: relative;
   bottom: 1px;
   left: 2px
+}
+
+.iconTree {
+  opacity: 0;
+}
+
+.treeNode:hover .iconTree {
+  opacity: 1;
+  margin-left: 55px;
+  padding-left: 10px;
 }
 
 .item-child {
