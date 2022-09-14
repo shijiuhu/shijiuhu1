@@ -11,14 +11,16 @@
           <input type="text" class="searchContent" placeholder="请输入关键字" ref="searchContent" @keyup.enter="searchContent">
           <input type="button" value="查询" @click="searchContent">
         </div>
-        <tree :list="list" ref="tree" @showProvinceName="showProvinceName"></tree>
+        <div class="provinceTree">
+          <tree :list="list" ref="tree" @showProvinceName="showProvinceName"></tree>
+        </div>
       </div>
       <div class="right">
         省市名称：<input type="text" class="provinceName" v-model="provinceName">
         <input type="button" class="provinceNameBaidu" value="百度一下" @click="provinceNameBaidu">
         <!-- {{ data }} -->
         <br>
-        <iframe name="provinceTree" :src="baiduUrl" height="100%" width="100%" noResize="yes"></iframe>
+        <iframe name="provinceTree" :src="baiduUrl" height="97%" width="100%" noResize="yes"></iframe>
       </div>
     </div>
   </div>
@@ -62,6 +64,11 @@ export default {
                       { name: "湖阳镇" },
                       { name: "姑孰镇" },
                       { name: "太白镇" },
+                      { name: "塘南镇" },
+                      { name: "石桥镇" },
+                      { name: "年陡镇" },
+                      { name: "乌溪镇" },
+                      { name: "江心乡" },
                     ],
                   },
                   { name: "含山县" },
@@ -69,6 +76,9 @@ export default {
                 ],
               },
               { name: "滁州" },
+              { name: "芜湖" },
+              { name: "黄山" },
+              { name: "蚌埠" },
             ],
           },
           {
@@ -81,6 +91,8 @@ export default {
                   { name: "玄武区" },
                   { name: "雨花台区" },
                   { name: "浦口区" },
+                  { name: "溧水区" },
+                  { name: "建邺区" },
                   { name: "高淳区" },
                 ],
               },
@@ -166,6 +178,10 @@ export default {
   display: inline-block;
   width: 120px;
   margin: 0 5px;
+}
+
+.provinceTree {
+  overflow: auto;
 }
 
 .provinceName {
