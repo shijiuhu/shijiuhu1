@@ -12,12 +12,13 @@
       <li><span @click="questionNaire">调查问卷</span></li>
       <li><span @click="provinceTree">省市树</span></li>
       <li><span @click="getEnvironment">获取本地开发或生产环境：</span>{{ localEnvironment }}</li>
-      <li><span @click="uuid()">生成随机数1：</span>{{ randomNumber1 }}</li>
+      <li><span @click="uuid()">生成随机数1-自己写的：</span>{{ randomNumber1 }}</li>
       <li><span @click="guid">生成随机数2：</span>{{ randomNumber2 }}</li>
       <li><span @click="uuid2">生成随机数3：</span>{{ randomNumber3 }}</li>
       <li><span @click="nanoid1">生成随机数4：</span>{{ randomNumber4 }}</li>
-      <li><span @click="nanoid2">生成随机数5：</span>{{ randomNumber5 }}</li>
-      <li><span @click="nanoid3">生成随机数6：</span>{{ randomNumber6 }}</li>
+      <li><span @click="nanoid2">生成随机数5-nanoid：</span>{{ randomNumber5 }}</li>
+      <li><span @click="nanoid3">生成随机数6-customAlphabet：</span>{{ randomNumber6 }}</li>
+      <li><span @click="uuid3">生成随机数7-v1：</span>{{ randomNumber7 }}</li>
       <li><span @click="getLocalJson">获取本地json文件</span></li>
     </ol>
     
@@ -50,6 +51,7 @@
 <script>
 import { request } from "../network/index.js";
 import { nanoid, customAlphabet } from 'nanoid'
+import { v1 } from 'uuid'
 
 export default {
   name: "Home",
@@ -91,8 +93,21 @@ export default {
       randomNumber3: '',
       randomNumber4: '',
       randomNumber5: '',
-      randomNumber6: ''
+      randomNumber6: '',
+      randomNumber7: ''
     };
+  },
+  created() {
+    // 为方便页面查看，创建时就调用这几个生成随机数的方法
+    this.uuid()
+    this.guid()
+    this.uuid2()
+    this.nanoid1()
+
+    // 后面3个都是通过npm安装的依赖函数生成的
+    this.nanoid2()
+    this.nanoid3()
+    this.uuid3()
   },
   methods: {
     questionNaire() {
@@ -105,11 +120,11 @@ export default {
     },
 
     // 生成随机数方法1，这里写参数的话调用的dom要加上()，不加具体参数则使用这里默认的36；
-    // 这是我自己写的，两数重复的概率极小，10个数字+26个大写字母+26个小写字母，共62个字符。
+    // 这是我自己写的，两数重复的概率极小，10个数字+26个大写字母+26个小写字母+-_2个字符，共64个字符。
     uuid(count=36) {
       console.log(count)
       const s = []
-      const digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      const digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
       for (let i = 0; i < count; i++) {
         s[i] = digits.charAt(Math.floor(Math.random() * digits.length))
       }
@@ -158,18 +173,24 @@ export default {
       console.log(this.randomNumber4)
     },
     
-    // 生成随机数方法5，使用npm安装的依赖，nanoid方法，不指定默认长度为21，nanoid()
+    // 生成随机数方法5，使用npm安装的依赖nanoid，nanoid方法，不指定默认长度为21，nanoid()
     nanoid2() {
       this.randomNumber5 = nanoid()
       console.log(this.randomNumber5)
     },
 
-    // 生成随机数方法6，使用npm安装的依赖，不指定默认长度为21，customAlphabet()
+    // 生成随机数方法6，使用npm安装的依赖customAlphabet，不指定默认长度为21，customAlphabet()
     nanoid3() {
       // 加第二个参数就是生成的位数，不加默认长度21
       const nanoid = customAlphabet('ABCDEF1234567890', 12)
       this.randomNumber6 = nanoid()
       console.log(this.randomNumber6)
+    },
+    
+    // 生成随机数方法7，使用npm安装的依赖v1，其实uuid中有多个随机数的方法，还有v3,v4,v5等，可点进去看
+    uuid3() {
+      this.randomNumber7 = v1()
+      console.log(this.randomNumber7)
     },
 
     getLocalJson() {
