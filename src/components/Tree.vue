@@ -1,17 +1,20 @@
 <template>
   <div v-if="list.name">
-    <div class="treeNode">
-      <label :for="list.name" v-if="list.isShow">
+    <div class="treeNode" v-if="list.isShow">
+      <label :for="list.name">
         <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
-        <span>{{list.name}}</span>
+        <span class="nodeName" contenteditable="true">{{list.name}}</span>
       </label>
-      <span v-if="hasChildren && list.isShow" 
+      <span v-if="hasChildren" 
         :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
         @click="toggleTriangle(list)">
       </span>
-      <i v-if="list.isShow" class="iconTree fa fa-trash" @click="deleteNode(list)"></i>
+      <div class="iconTree">
+        <i class="iconTreeItem fa fa-save" title="保存" @click="saveNode(list)"></i>
+        <i class="iconTreeItem fa fa-trash" title="删除" @click="deleteNode(list)"></i>
+      </div>
     </div>
-    <div v-if="hasChildren" v-show="list.isOpen" class="item-child">
+    <div v-show="list.isOpen" class="item-child">
       <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
     </div>
   </div>
@@ -130,6 +133,17 @@ export default {
       }
     },
 
+    // 保存修改的节点名称
+    saveNode(list) {
+      const oldName = list.name
+      const editNode = document.getElementById(oldName).nextElementSibling
+      const newName = editNode.innerHTML.trim()
+      if (oldName !== newName) {
+        list.name = newName
+        window.alert('保存成功！')
+      }
+    },
+
     // 删除选中节点
     deleteNode(list) {
       const hasChild = list.children && list.children.length
@@ -175,6 +189,10 @@ export default {
 /* @import "../assets/fontAwesome/css/font-awesome.min.css"; */
 @import "font-awesome/css/font-awesome.min.css";
 
+.nodeName {
+  font-size: 14px;
+}
+
 .treeNode:hover {
   background-color: #f00;
 }
@@ -207,12 +225,16 @@ export default {
 
 .iconTree {
   opacity: 0;
+  display: inline-block;
 }
 
 .treeNode:hover .iconTree {
   opacity: 1;
   margin-left: 55px;
-  padding-left: 10px;
+}
+
+.treeNode:hover .iconTreeItem {
+  padding: 0 12px;
 }
 
 .item-child {

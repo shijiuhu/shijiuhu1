@@ -160,12 +160,12 @@ export default {
 }
 
 .left {
-  width: 20%;
+  width: 25%;
   background-color: rgb(238, 220, 56);
 }
 
 .right {
-  width: 80%;
+  width: 75%;
   background-color: rgb(122, 168, 228);
 }
 
