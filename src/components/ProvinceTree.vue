@@ -105,6 +105,50 @@ export default {
             name: "浙江",
             children: [{ name: "杭州" }, { name: "宁波" }],
           },
+          {
+            name: "GET 英雄",
+            children: [
+              { 
+                name: "GET 秦始皇",
+                children: [
+                  {
+                    name: 'DELETE 汉武帝'
+                  },
+                  {
+                    name: 'POST 光武帝'
+                  },
+                ]
+              },
+              {
+                name: 'PUT 唐太宗',
+                children: [
+                  {
+                    name: 'POST 武则天'
+                  },
+                  {
+                    name: 'HEAD 唐高宗'
+                  }
+                ]
+              },
+              { 
+                name: "HEAD 名将",
+                children: [
+                  {
+                    name: 'PUT 廉颇'
+                  },
+                  {
+                    name: 'DELETE 李广'
+                  },
+                  {
+                    name: 'DELETE 白起'
+                  },
+                  {
+                    name: 'POST 王翦'
+                  },
+                ]
+              }
+            ],
+          },
         ],
       },
       isExpandAll: true,

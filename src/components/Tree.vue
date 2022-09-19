@@ -32,6 +32,9 @@ export default {
     }
   },
   created() {
+    // 增加排序字段
+    this.addSortFieldReg(this.list)
+
     // 将原值按名称重新排列
     this.orderByName(this.list)
 
@@ -164,13 +167,35 @@ export default {
       this.$emit('showProvinceName', name)
     },
 
+    // 指定排序移除规则
+    addSortFieldReg(list) {
+      const replaceArray = ['GET ', 'POST ', 'HEAD ', 'PUT ', 'DELETE ']
+      const replaceStr = replaceArray.join('|')
+      const reg = new RegExp('^('+replaceStr+')')
+      this.addSortField(list, reg)
+    },
+
+    // 对目录结构树添加字段（同时去除特定字符）
+    addSortField(list, reg) {
+      const array = list.children
+      if(array && array.length) {
+        array.forEach(value => {
+          value.sortName = value.name.replace(reg, '')
+        })
+
+        for (let i = 0; i < array.length; i++) {
+          this.addSortField(array[i], reg)
+        }
+      }
+    },
+
     // 结构树重新排序
     orderByName(list) {
       const array = list.children
       if(array && array.length) {
         // 1.先本层比较排序
         array.sort((a, b) => {
-          return a.name.localeCompare(b.name)
+          return a.sortName.localeCompare(b.sortName)
         })
 
         // 2.再循环遍历子节点排序
