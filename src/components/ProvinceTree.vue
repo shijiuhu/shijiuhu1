@@ -12,12 +12,13 @@
           <input type="button" value="查询" @click="searchContent">
         </div>
         <div class="provinceTree">
-          <tree :list="list" ref="tree" @showProvinceName="showProvinceName"></tree>
+          <tree :list="list" ref="tree" @showProvinceName="showProvinceName" @dragProvinceName="dragProvinceName"></tree>
         </div>
       </div>
       <div class="right">
         省市名称：<input type="text" class="provinceName" v-model="provinceName">
         <input type="button" class="provinceNameBaidu" value="百度一下" @click="provinceNameBaidu">
+        <input type="text" class="dragProvinceName" placeholder="可拖拽名称到此处" :value="dragName" @dragover="dragover">
         <!-- {{ data }} -->
         <br>
         <iframe name="provinceTree" :src="baiduUrl" height="97%" width="100%" noResize="yes"></iframe>
@@ -153,7 +154,8 @@ export default {
       },
       isExpandAll: true,
       data: '',
-      baiduUrl: 'http://localhost:8080/provinceTree'
+      baiduUrl: 'http://localhost:8080/provinceTree',
+      dragName: ''
     }
   },
   methods: {
@@ -184,6 +186,16 @@ export default {
     // 查找符合要求的省市名称
     searchContent() {
       this.$refs.tree.searchContent(this.$refs.searchContent.value.trim())
+    },
+
+    // 将子组件传过来的值赋值给父组件中的值
+    dragProvinceName(name) {
+      this.dragName = name
+    },
+
+    // 拖拽结束后阻止默认事件，否则将被拖回
+    dragover(event) {
+      event.preventDefault()
     }
   }
 }
@@ -222,6 +234,12 @@ export default {
   display: inline-block;
   width: 120px;
   margin: 0 5px;
+}
+
+.dragProvinceName {
+  display: inline-block;
+  width: 120px;
+  margin-left: 5px;
 }
 
 .provinceTree {

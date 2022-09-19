@@ -3,7 +3,7 @@
     <div class="treeNode" v-if="list.isShow">
       <label :for="list.name">
         <input type="checkbox" :id="list.name" :checked="list.isChecked" @click="isSelectedAll(list)">
-        <span class="nodeName" contenteditable="true">{{list.name}}</span>
+        <span class="nodeName" contenteditable="false" draggable="true" @dragstart="dragStart">{{list.name}}</span>
       </label>
       <span v-if="hasChildren" 
         :class="{ 'triangleUp': !list.isOpen, 'triangleDown': list.isOpen }" 
@@ -15,7 +15,9 @@
       </div>
     </div>
     <div v-show="list.isOpen" class="item-child">
-      <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"></tree>
+      <tree v-for="item in list.children" :list="item" :key="item" @showProvinceName="showProvinceName"
+          @dragProvinceName="dragName">
+      </tree>
     </div>
   </div>
 </template>
@@ -203,6 +205,21 @@ export default {
           this.orderByName(array[i])
         }
       }
+    },
+
+    // 拖拽开始将节点名称发送给父组件
+    dragStart(event) {
+      this.dragProvinceName(event.target.innerText)
+    },
+
+    // 循环嵌套节点将值传递给父组件
+    dragName(name) {
+      this.dragProvinceName(name)
+    },
+
+    // 传递给父组件的方法及名称
+    dragProvinceName(name) {
+      this.$emit('dragProvinceName', name)
     }
   }
 }
