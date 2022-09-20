@@ -45,75 +45,78 @@
         <span>{{ item.content }}</span>
       </li>
     </ul>
+    <Calendar></Calendar>
   </div>
 </template>
 
 <script>
-import { request } from "../network/index.js";
+import { request } from "../network/index.js"
 import { nanoid, customAlphabet } from 'nanoid'
 import { v1 } from 'uuid'
+import Calendar from "./Calendar.vue"
 
 export default {
   name: "Home",
+  components: { 
+    Calendar 
+  },
   data() {
     return {
       backToHome: "http://localhost:8080/home",
       chinaSoftOA: "http://ics.chinasoftosg.com",
-      niukeJS:
-        "https://www.nowcoder.com/practice/a82e035501504cedbe881d08c824a381?tpId=271",
-      niukeInterview:
-        "https://www.nowcoder.com/exam/interview/detail?questionClassifyId=0&questionId=2412474&questionJobId=156&type=1",
+      niukeJS: "https://www.nowcoder.com/practice/a82e035501504cedbe881d08c824a381?tpId=271",
+      niukeInterview: "https://www.nowcoder.com/exam/interview/detail?questionClassifyId=0&questionId=2412474&questionJobId=156&type=1",
       leetCodePractice: "https://leetcode.cn/problems/palindrome-number/",
       localTestJson: [],
       localEnvironment: "",
       comments: [
-        {
-          imgUrl: require("@/assets/img/comments/npsFeel1.png"),
-          content: "强烈不推荐",
-        },
-        {
-          imgUrl: require("@/assets/img/comments/npsFeel2.png"),
-          content: "不推荐",
-        },
-        {
-          imgUrl: require("@/assets/img/comments/npsFeel3.png"),
-          content: "一般般",
-        },
-        {
-          imgUrl: require("@/assets/img/comments/npsFeel4.png"),
-          content: "推荐",
-        },
-        {
-          imgUrl: require("@/assets/img/comments/npsFeel5.png"),
-          content: "强烈推荐",
-        },
+          {
+              imgUrl: require("@/assets/img/comments/npsFeel1.png"),
+              content: "强烈不推荐",
+          },
+          {
+              imgUrl: require("@/assets/img/comments/npsFeel2.png"),
+              content: "不推荐",
+          },
+          {
+              imgUrl: require("@/assets/img/comments/npsFeel3.png"),
+              content: "一般般",
+          },
+          {
+              imgUrl: require("@/assets/img/comments/npsFeel4.png"),
+              content: "推荐",
+          },
+          {
+              imgUrl: require("@/assets/img/comments/npsFeel5.png"),
+              content: "强烈推荐",
+          },
       ],
-      randomNumber1: '',
-      randomNumber2: '',
-      randomNumber3: '',
-      randomNumber4: '',
-      randomNumber5: '',
-      randomNumber6: '',
-      randomNumber7: ''
+      randomNumber1: "",
+      randomNumber2: "",
+      randomNumber3: "",
+      randomNumber4: "",
+      randomNumber5: "",
+      randomNumber6: "",
+      randomNumber7: ""
     };
   },
   created() {
     // 为方便页面查看，创建时就调用这几个生成随机数的方法
-    this.uuid()
-    this.guid()
-    this.uuid2()
-    this.nanoid1()
-
+    this.uuid();
+    this.guid();
+    this.uuid2();
+    this.nanoid1();
     // 后面3个都是通过npm安装的依赖函数生成的
-    this.nanoid2()
-    this.nanoid3()
-    this.uuid3()
+    this.nanoid2();
+    this.nanoid3();
+    this.uuid3();
   },
   methods: {
     questionNaire() {
       this.$router.push("/questionNaire");
       console.log("跳转到调查问卷页面");
     },
+
     getEnvironment() {
       this.localEnvironment = process.env.NODE_ENV;
       console.log(process.env, "--------this.localEnvironment");
@@ -121,94 +124,91 @@ export default {
 
     // 生成随机数方法1，这里写参数的话调用的dom要加上()，不加具体参数则使用这里默认的36；
     // 这是我自己写的，两数重复的概率极小，10个数字+26个大写字母+26个小写字母+-_2个字符，共64个字符。
-    uuid(count=36) {
-      console.log(count)
-      const s = []
-      const digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
+    uuid(count = 36) {
+      console.log(count);
+      const s = [];
+      const digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
       for (let i = 0; i < count; i++) {
-        s[i] = digits.charAt(Math.floor(Math.random() * digits.length))
+        s[i] = digits.charAt(Math.floor(Math.random() * digits.length));
       }
-      this.randomNumber1 = s.join('')
-      console.log(this.randomNumber1)
+      this.randomNumber1 = s.join("");
+      console.log(this.randomNumber1);
     },
 
     // 生成随机数方法2
     guid() {
-      this.randomNumber2 = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0,
-              v = c == 'x' ? r : (r & 0x3 | 0x8)
-         return v.toString(16)
-      })
-      console.log(this.randomNumber2)
+      this.randomNumber2 = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0, v = c == "x" ? r : (r & 3 | 8);
+        return v.toString(16);
+      });
+      console.log(this.randomNumber2);
     },
 
     // 生成随机数方法3
     uuid2() {
-      const s = []
-      const hexDigits = '0123456789abcdef'
+      const s = [];
+      const hexDigits = "0123456789abcdef";
       for (let i = 0; i < 36; i++) {
-        s[i] = hexDigits.charAt(Math.floor(Math.random() * 0x10))
+        s[i] = hexDigits.charAt(Math.floor(Math.random() * 16));
       }
-      s[14] = '4'
-      s[19] = hexDigits.charAt((s[19] & 0x3) | 0x8)
-      s[8] = s[13] = s[18] = s[23] = '-'
-      this.randomNumber3 = s.join('')
-      console.log(this.randomNumber3)
+      s[14] = "4";
+      s[19] = hexDigits.charAt((s[19] & 3) | 8);
+      s[8] = s[13] = s[18] = s[23] = "-";
+      this.randomNumber3 = s.join("");
+      console.log(this.randomNumber3);
     },
 
     // 生成随机数方法4，import { nanoid } from 'nanoid' 主要可以通过npm包的形式安装，核心代码如下
     nanoid1() {
-      const urlAlphabet = 'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
+      const urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
       let nanoId = (size = 21) => {
-        let id = ''
+        let id = "";
         // A compact alternative for `for (var i = 0; i < step; i++)`.
-        let i = size
+        let i = size;
         while (i--) {
           // `| 0` is more compact and faster than `Math.floor()`.
-          id += urlAlphabet[(Math.random() * 64) | 0]
+          id += urlAlphabet[(Math.random() * 64) | 0];
         }
-        return id
-      }
-      this.randomNumber4 = nanoId()
-      console.log(this.randomNumber4)
+        return id;
+      };
+      this.randomNumber4 = nanoId();
+      console.log(this.randomNumber4);
     },
-    
+
     // 生成随机数方法5，使用npm安装的依赖nanoid，nanoid方法，不指定默认长度为21，nanoid()
     nanoid2() {
-      this.randomNumber5 = nanoid()
-      console.log(this.randomNumber5)
+      this.randomNumber5 = nanoid();
+      console.log(this.randomNumber5);
     },
 
     // 生成随机数方法6，使用npm安装的依赖customAlphabet，不指定默认长度为21，customAlphabet()
     nanoid3() {
       // 加第二个参数就是生成的位数，不加默认长度21
-      const nanoid = customAlphabet('ABCDEF1234567890', 12)
-      this.randomNumber6 = nanoid()
-      console.log(this.randomNumber6)
+      const nanoid = customAlphabet("ABCDEF1234567890", 12);
+      this.randomNumber6 = nanoid();
+      console.log(this.randomNumber6);
     },
-    
+
     // 生成随机数方法7，使用npm安装的依赖v1，其实uuid中有多个随机数的方法，还有v3,v4,v5等，可点进去看
     uuid3() {
-      this.randomNumber7 = v1()
-      console.log(this.randomNumber7)
+      this.randomNumber7 = v1();
+      console.log(this.randomNumber7);
     },
 
     getLocalJson() {
       const localRequest = request({
-        url: "/LocalTest.json",
-      })
-        .then((res) => {
+          url: "/LocalTest.json",
+      }).then((res) => {
           this.localTestJson = res.data.message;
           console.log(res.data.message, "-----------res");
-        })
-        .catch((err) => {
+      }).catch((err) => {
           console.log(err, "-----------err");
-        });
+      });
     },
     provinceTree() {
       this.$router.push("/provinceTree");
     }
-  },
+  }
 };
 </script>
 
