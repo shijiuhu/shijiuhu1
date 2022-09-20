@@ -60,6 +60,22 @@ const routes = [
       title: '省市树',
       keepAlive: true
     }
+  },
+  {
+    path: '/random',
+    component: () => import('../components/Random.vue'),
+    meta: {
+      title: '随机数',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/calendar',
+    component: () => import('../components/Calendar.vue'),
+    meta: {
+      title: '日历时间',
+      keepAlive: false
+    }
   }
 ]
 
