@@ -55,7 +55,7 @@ const routes = [
   },
   {
     path: '/provinceTree',
-    component: () => import('../components/ProvinceTree.vue'),
+    component: () => import('../view/provinceTree/ProvinceTree.vue'),
     meta: {
       title: '省市树',
       keepAlive: true
@@ -71,7 +71,7 @@ const routes = [
   },
   {
     path: '/calendar',
-    component: () => import('../components/Calendar.vue'),
+    component: () => import('../view/calendar/Calendar.vue'),
     meta: {
       title: '日历时间',
       keepAlive: false

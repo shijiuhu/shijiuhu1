@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import lunarDate from '../common/lunarDate.js'
+import lunarDate from './lunarDate.js'
 
 export default {
   name: 'Calendar',

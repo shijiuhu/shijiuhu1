@@ -103,7 +103,18 @@ export default {
   methods: {
     toQuestionNaire() {
       this.$router.push("/questionNaire");
-      console.log("跳转到调查问卷页面");
+    },
+
+    toProvinceTree() {
+      this.$router.push('/provinceTree');
+    },
+
+    toRandom() {
+      this.$router.push('/random')
+    },
+
+    toCalendar() {
+      this.$router.push('/calendar')
     },
 
     getEnvironment() {
@@ -120,24 +131,13 @@ export default {
       }).catch((err) => {
           console.log(err, "-----------err");
       });
+      console.log(localRequest, '-----------localRequest')
     },
 
     staticSrc() {
       const dom = document.querySelector('.comments')
       dom.style.display = 'flex'
     },
-
-    toProvinceTree() {
-      this.$router.push('/provinceTree');
-    },
-
-    toRandom() {
-      this.$router.push('/random')
-    },
-
-    toCalendar() {
-      this.$router.push('/calendar')
-    }
   }
 };
 </script>
