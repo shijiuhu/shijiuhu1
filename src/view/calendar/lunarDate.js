@@ -35,7 +35,7 @@ class LunarDate {
     }
   }
 
-  getLunar() {
+  getLunar(formatStr) {
     var nyear;
     var nmonth;
     var nday = -1;
@@ -45,8 +45,8 @@ class LunarDate {
     var nsec;
     var lmonth, lday, lleap; //农历参数
 
-    function Draw() {
-      NewTick();
+    function Draw(formatStr) {
+      NewTick(formatStr);
 
       //显示时间
       var s = nyear + '年' + nmonth + '月' + nday + '日 ' + '星期' + cweekday(nwday) + ' ' + shapetime(nhrs, nmin, nsec);
@@ -56,8 +56,14 @@ class LunarDate {
       return lunar_month_day
     }
 
-    function NewTick() {
-      let noww = new Date();
+    function NewTick(formatStr) {
+      let noww 
+      if (!formatStr) {
+        noww = new Date();
+      } else {
+        noww = new Date(formatStr);
+      }
+      
       if (noww.getDate() != nday) {
         nyear = noww.getFullYear();
         nmonth = noww.getMonth() + 1;
@@ -178,7 +184,7 @@ class LunarDate {
       }
     }
     //农历函数结束
-    return Draw();
+    return Draw(formatStr);
   }
 }
 

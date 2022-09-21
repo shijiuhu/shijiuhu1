@@ -2,8 +2,14 @@
   <div class="calendarTitle">
     <div class="nowTime">{{ nowTime }} {{ nowTime2 }}</div>
     <div class="nowDate">{{ nowDate }} {{ lunarNowDate }}</div>
-    <div>获取月日历数据 {{ monthFirstDay }}</div>
   </div>
+
+  <div class="dateInfo">
+    <span class="solarYearMonth">{{ solarYearMonth }}</span>
+    <i class="toggleMonth fa fa-angle-down" @click="nextMonth"></i>
+    <i class="toggleMonth fa fa-angle-up" @click="previousMonth"></i>
+  </div>
+
   <div class="weekName">
     <span>日</span>
     <span>一</span>
@@ -13,13 +19,18 @@
     <span>五</span>
     <span>六</span>
   </div>
+
   <div class="weekNumber">
-    <span v-for="(item, index) in map" :key="item">{{ index + 1 }}</span>
+    <div v-for="item in array" :key="item" class="weekDay">
+      <div class="solarDay">{{ item.solarDay }}</div>
+      <div class="lunarDay">{{ item.lunarDay }}</div>
+    </div>
   </div>
 </template>
 
 <script>
 import lunarDate from './lunarDate.js'
+import solarlunar from 'solarlunar'
 
 export default {
   name: 'Calendar',
@@ -29,8 +40,9 @@ export default {
       nowTime2: '',
       nowDate: '',
       lunarNowDate: '',
-      monthFirstDay: '01',
-      map: new Map()
+      array: [],
+      calendarDate: new Date(),
+      solarYearMonth: ''
     }
   },
   created() {
@@ -45,7 +57,7 @@ export default {
     this.updateDate() // 调用得到公历日期（年月日）
     this.updateLunarDate() // 调用得到农历日期（月日）
 
-    this.getMonthFirstDay()
+    this.showCalendar(new Date())
   },
   watch: {
     // 每到凌晨12点需要更新一次日期
@@ -56,13 +68,67 @@ export default {
     }
   },
   methods: {
-    getMonthFirstDay() {
-      const date = new Date()
-      const monthDayArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-      const monthDay = monthDayArray[date.getMonth()]
-      for (let i = 1; i <= monthDay; i++) {
-        this.map.set(i, new Date(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + this.padZero(i)))
+    // 切换到上一个月
+    previousMonth() {
+      let year = this.calendarDate.getFullYear()
+      let month = this.calendarDate.getMonth() + 1
+      if (month == 1) {
+        year = year - 1
+        month = 12
+      } else {
+        month = month - 1
       }
+      this.calendarDate = new Date(year + '-' + this.padZero(month) + '-01')
+      this.array = []
+      this.showCalendar(this.calendarDate)
+    },
+
+    // 切换到下一个月
+    nextMonth() {
+      let year = this.calendarDate.getFullYear()
+      let month = this.calendarDate.getMonth() + 1
+      if (month == 12) {
+        year = year + 1
+        month = 1
+      } else {
+        month = month + 1
+      }
+      this.calendarDate = new Date(year + '-' + this.padZero(month) + '-01')
+      this.array = []
+      this.showCalendar(this.calendarDate)
+    },
+
+    // 展示日历
+    showCalendar(date) {
+      this.solarYearMonth = date.getFullYear() + '年' + this.padZero(date.getMonth() + 1) + '月'
+
+      const monthFirstDayWeek = new Date(date.getFullYear() + '-' + (date.getMonth() + 1) + '-01').getDay()
+      for (let i = -monthFirstDayWeek; i < 0; i++) {
+        this.array.push('')
+      }
+      const monthDayArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+      if (date.getFullYear() % 400 === 0 || (date.getFullYear() % 100 !== 0 && date.getFullYear() % 4 === 0)) {
+        monthDayArray[1] = 29
+      }
+      const monthDay = monthDayArray[date.getMonth()]
+      let obj = {}
+      let formatStr
+      let lunarDay
+      let lunarMonthDay
+      let term
+      for (let i = 1; i <= monthDay; i++) {
+        formatStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + this.padZero(i)
+        obj.solarDay = new Date(formatStr).getDate()
+
+        lunarMonthDay = lunarDate.getLunar(formatStr)
+        lunarDay = lunarMonthDay.substring(lunarMonthDay.indexOf('月')+1)
+        term = solarlunar.solar2lunar(date.getFullYear(), date.getMonth() + 1, this.padZero(i)).term
+        obj.lunarDay = !term ? lunarDay : term
+
+        this.array.push(obj)
+        obj = {}
+      }
+      console.log(this.array)
     },
 
     // 对只有一位数字的情况前面补0
@@ -111,19 +177,50 @@ export default {
 </script>
 
 <style scoped>
+@import "font-awesome/css/font-awesome.min.css";
+
 .calendarTitle {
   width: 408px;
   border: 1px solid black;
+  padding-bottom: 10px;
 }
 
 .nowTime {
   font-size: 40px;
   font-weight: 700;
+  padding-left: 20px;
+}
+
+.dateInfo {
+  width: 408px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid black;
+  border-bottom: none;
+}
+
+.solarYearMonth {
+  padding-left: 20px;
 }
 
 .nowDate {
   font-size: 20px;
   font-weight: 700;
+  padding-left: 20px;
+}
+
+.toggleMonth {
+  float: right;
+  line-height: 30px;
+}
+
+.toggleMonth:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.fa-angle-down {
+  padding: 0 12px 0 18px;
 }
 
 .weekName {
@@ -132,6 +229,8 @@ export default {
   height: 40px;
   line-height: 40px;
   border: 1px solid black;
+  border-top: none;
+  border-bottom: none;
   font-size: 18px;
   font-weight: 700;
 }
@@ -144,14 +243,19 @@ export default {
 
 .weekNumber {
   border: 1px solid black;
+  border-top: none;
   width: 408px;
   font-size: 16px;
 }
 
-.weekNumber span {
+.weekDay {
   display: inline-block;
   text-align: center;
   width: 58px;
-  padding: 6px 0;
+  padding: 10px 0;
+}
+
+.lunarDay {
+  font-size: 14px;
 }
 </style>
