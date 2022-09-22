@@ -1,31 +1,41 @@
 <template>
   <div>
-    <span id="home">江苏</span>
-    <span class="anhui">安徽</span>
-    <span ref="shanghai">上海</span>
-
-    <form action="" name="testFrom">
-      <table>
-        <tr>
-          <td>a</td>
-          <td>b</td>
-          <td>c</td>
-        </tr>
-      </table>
-    </form>
-
-    <button @click="clickBtn">按钮</button>
+    <ol>
+      <li>
+        <fieldset>
+          <legend>这里是打印获取dom的测试标签</legend>
+          <span id="home">江苏</span>
+          <span class="anhui">安徽</span>
+          <span ref="shanghai">上海</span>
+          <form action="" name="testFrom">
+            <table>
+              <tr>
+                <td>a</td>
+                <td>b</td>
+                <td>c</td>
+              </tr>
+            </table>
+          </form>
+          <button @click="clickBtn">按钮</button>
+        </fieldset>
+      </li>
+      
+      <li>
+        <fieldset>
+          <legend>这里是测试router-link占位，但似乎不在App.vue中不行，苹果中可测试i18n切换语言</legend>
+          <router-link to="/fruits/apple" class="fruits">苹果</router-link>
+          <router-link to="/fruits/orange" class="fruits">橘子</router-link>
+          <router-view></router-view>
+        </fieldset>
+      </li>
+    </ol>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Test',
+  name: 'TestMore',
   methods: {
-    questionNaire() {
-      this.$router.push('/questionNaire')
-      console.log('切换到了questionNaire组件')
-    },
     clickBtn() {
       const btn1 = document.getElementById('home')
       btn1.style.color = 'red'
@@ -62,9 +72,12 @@ export default {
 </script>
 
 <style scoped>
-a {
-  color: skyblue;
-  font-weight: 700;
-  text-decoration: none;
+.fruits {
+  padding-right: 20px;
+  font-weight: bold;
+}
+
+li {
+  margin-top: 10px;
 }
 </style>

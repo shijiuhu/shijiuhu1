@@ -7,7 +7,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('../components/Login.vue'),
+    component: () => import('../view/Login.vue'),
     meta: {
       title: '登录',
       keepAlive: false
@@ -15,11 +15,11 @@ const routes = [
   },
   {
     path: '/home',
-    component: () => import('../components/Home.vue')
+    component: () => import('../view/Home.vue')
   },
   {
     path: '/questionNaire',
-    component: () => import('../components/QuestionNaire.vue'),
+    component: () => import('../view/QuestionNaire.vue'),
     meta: {
       title: '调查问卷',
       keepAlive: false
@@ -33,7 +33,7 @@ const routes = [
     children: [
       {
         path: 'apple',
-        component: () => import('../components/Apple.vue'),
+        component: () => import('../view/i18nExample/Apple.vue'),
         meta: {
           title: '苹果',
           keepAlive: false
@@ -41,7 +41,7 @@ const routes = [
       },
       {
         path: 'orange',
-        component: () => import('../components/Orange.vue'),
+        component: () => import('../view/i18nExample/Orange.vue'),
         meta: {
           title: '橘子',
           keepAlive: true
@@ -50,8 +50,8 @@ const routes = [
     ]
   },
   {
-    path: '/test',
-    component: () => import('../components/Test.vue')
+    path: '/testMore',
+    component: () => import('../view/TestMore.vue')
   },
   {
     path: '/provinceTree',
@@ -63,7 +63,7 @@ const routes = [
   },
   {
     path: '/random',
-    component: () => import('../components/Random.vue'),
+    component: () => import('../view/Random.vue'),
     meta: {
       title: '随机数',
       keepAlive: false

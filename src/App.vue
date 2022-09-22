@@ -4,8 +4,6 @@
     <router-link to="/login"></router-link>
     <!-- <router-link to="/fruits/apple">苹果</router-link>&nbsp; -->
     <!-- <router-link to="/fruits/orange">橘子</router-link>&nbsp; -->
-    <!-- <router-link to="/test">测试组件</router-link> -->
-    <!-- <p>--------------------------------------------------------------------</p> -->
     <router-view></router-view>
   </div>
 </template>

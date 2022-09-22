@@ -14,6 +14,7 @@
     <div>
       <div class="title">已开发组件</div>
       <div class="content">
+        <span class="contentItem devCom" @click="testMore">测试i18n等</span>
         <span class="contentItem devCom" @click="toQuestionNaire">调查问卷</span>
         <span class="contentItem devCom" @click="toProvinceTree">省市树</span>
         <span class="contentItem devCom" @click="toRandom">随机数</span>
@@ -101,8 +102,12 @@ export default {
     };
   },
   methods: {
+    testMore() {
+      this.$router.push('/testMore')
+    },
+
     toQuestionNaire() {
-      this.$router.push("/questionNaire");
+      this.$router.push('/questionNaire');
     },
 
     toProvinceTree() {
