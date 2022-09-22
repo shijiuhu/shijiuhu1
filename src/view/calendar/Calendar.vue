@@ -1,30 +1,39 @@
 <template>
-  <div class="calendarTitle">
-    <div class="nowTime">{{ nowTime }} {{ nowTime2 }}</div>
-    <div class="nowDate">{{ nowDate }} {{ lunarNowDate }}</div>
-  </div>
+  <div class="calendar">
 
-  <div class="dateInfo">
-    <span class="solarYearMonth">{{ solarYearMonth }}</span>
-    <i class="toggleMonth fa fa-angle-down" @click="nextMonth"></i>
-    <i class="toggleMonth fa fa-angle-up" @click="previousMonth"></i>
-  </div>
-
-  <div class="weekName">
-    <span>日</span>
-    <span>一</span>
-    <span>二</span>
-    <span>三</span>
-    <span>四</span>
-    <span>五</span>
-    <span>六</span>
-  </div>
-
-  <div class="weekNumber">
-    <div v-for="item in array" :key="item" class="weekDay">
-      <div class="solarDay">{{ item.solarDay }}</div>
-      <div class="lunarDay">{{ item.lunarDay }}</div>
+    <div class="calendarTitle">
+      <div class="nowTime">{{ nowTime }} {{ nowTime2 }}</div>
+      <div class="nowDate">{{ nowDate }} {{ lunarNowDate }}</div>
     </div>
+
+    <div class="dateInfo">
+      <span class="solarYearMonth">{{ solarYearMonth }}</span>
+      <i class="toggleMonth fa fa-angle-down" @click="nextMonth"></i>
+      <i class="toggleMonth fa fa-angle-up" @click="previousMonth"></i>
+    </div>
+
+    <div class="weekName">
+      <span>日</span>
+      <span>一</span>
+      <span>二</span>
+      <span>三</span>
+      <span>四</span>
+      <span>五</span>
+      <span>六</span>
+    </div>
+
+    <div class="weekNumber">
+      <div v-for="item in showDateArray" :key="item" class="weekDay" 
+        :class="{ 'weekDay2': !!item.solarDay, 'isToday': item.isToday }">
+        <div class="solarDay">{{ item.solarDay }}</div>
+        <div class="lunarDay">
+          <span :class="{ 'isLunarFirstDay': item.isLunarFirstDay }">
+            {{ item.lunarDay }}
+          </span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -40,7 +49,7 @@ export default {
       nowTime2: '',
       nowDate: '',
       lunarNowDate: '',
-      array: [],
+      showDateArray: [],
       calendarDate: new Date(),
       solarYearMonth: ''
     }
@@ -50,14 +59,14 @@ export default {
     this.getNowTime()
     this.getNowTime2()
 
-    // 每隔1000ms调用一次，实现页面时钟的效果，这里对应各自方法的调用
+    // 每隔一段时间调用一次，实现页面时钟的效果，这里对应各自方法的调用
     this.updateTime()
     this.updateTime2()
 
     this.updateDate() // 调用得到公历日期（年月日）
     this.updateLunarDate() // 调用得到农历日期（月日）
 
-    this.showCalendar(new Date())
+    this.showCalendar(this.calendarDate)
   },
   watch: {
     // 每到凌晨12点需要更新一次日期
@@ -79,7 +88,7 @@ export default {
         month = month - 1
       }
       this.calendarDate = new Date(year + '-' + this.padZero(month) + '-01')
-      this.array = []
+      this.showDateArray = []
       this.showCalendar(this.calendarDate)
     },
 
@@ -94,41 +103,96 @@ export default {
         month = month + 1
       }
       this.calendarDate = new Date(year + '-' + this.padZero(month) + '-01')
-      this.array = []
+      this.showDateArray = []
       this.showCalendar(this.calendarDate)
     },
 
-    // 展示日历
-    showCalendar(date) {
-      this.solarYearMonth = date.getFullYear() + '年' + this.padZero(date.getMonth() + 1) + '月'
+    // 展示日历方法2
+    showCalendar2(date) {
+      const year = date.getFullYear()
+      const month = this.padZero(date.getMonth() + 1)
+      this.solarYearMonth = year + '年' + month + '月'
 
-      const monthFirstDayWeek = new Date(date.getFullYear() + '-' + (date.getMonth() + 1) + '-01').getDay()
+      const monthFirstDayWeek = new Date(year + '-' + month + '-01').getDay()
       for (let i = -monthFirstDayWeek; i < 0; i++) {
-        this.array.push('')
+        this.showDateArray.push('')
       }
       const monthDayArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-      if (date.getFullYear() % 400 === 0 || (date.getFullYear() % 100 !== 0 && date.getFullYear() % 4 === 0)) {
+      if (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)) {
         monthDayArray[1] = 29
       }
       const monthDay = monthDayArray[date.getMonth()]
-      let obj = {}
-      let formatStr
-      let lunarDay
-      let lunarMonthDay
-      let term
+
+      let showDate = {}
+      let formatStr, lunarDay, lunarMonthDay, lunarTerm
       for (let i = 1; i <= monthDay; i++) {
-        formatStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + this.padZero(i)
-        obj.solarDay = new Date(formatStr).getDate()
+        formatStr = year + '-' + month + '-' + this.padZero(i)
+        showDate.solarDay = new Date(formatStr).getDate()
 
         lunarMonthDay = lunarDate.getLunar(formatStr)
         lunarDay = lunarMonthDay.substring(lunarMonthDay.indexOf('月')+1)
-        term = solarlunar.solar2lunar(date.getFullYear(), date.getMonth() + 1, this.padZero(i)).term
-        obj.lunarDay = !term ? lunarDay : term
+        lunarTerm = solarlunar.solar2lunar(year, month, this.padZero(i)).term
+        showDate.lunarDay = !lunarTerm ? lunarDay : lunarTerm
 
-        this.array.push(obj)
-        obj = {}
+        this.showDateArray.push(showDate)
+        showDate = {}
       }
-      console.log(this.array)
+      console.log(this.showDateArray)
+    },
+
+    showCalendar(date) {
+      const year = date.getFullYear()
+      const month = this.padZero(date.getMonth() + 1)
+      this.solarYearMonth = year + '年' + month + '月'
+
+      let monthFirstDayWeek = solarlunar.solar2lunar(year, month, this.padZero(1)).nWeek
+      monthFirstDayWeek = monthFirstDayWeek === 7 ? 0 : monthFirstDayWeek
+      for (let i = -monthFirstDayWeek; i < 0; i++) {
+        this.showDateArray.push('')
+      }
+      const monthDayArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+      if (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)) {
+        monthDayArray[1] = 29
+      }
+      const monthDay = monthDayArray[date.getMonth()]
+
+      let showDate = {}
+      let solarLunarDay, lunarDay, lunarTerm
+      for (let i = 1; i <= monthDay; i++) {
+        showDate.solarDay = i
+        showDate.year = year
+        showDate.month = month
+
+        solarLunarDay = solarlunar.solar2lunar(year, month, this.padZero(i))
+        lunarDay = solarLunarDay.dayCn
+        showDate.isLunarFirstDay = lunarDay === '初一' ? true : false
+        lunarTerm = solarLunarDay.term
+        showDate.lunarDay = !lunarTerm ? lunarDay: lunarTerm
+
+        if (this.getThisYMD() === year + '-' + month + '-' + this.padZero(i)) {
+          showDate.isToday = true
+        }
+
+        // const todayIndex = new Date().getDate() + monthFirstDayWeek - 1
+        // if (todayIndex <= this.showDateArray.length - 1) {
+        //   const today = this.showDateArray[todayIndex]
+        //   if (today.year === year && today.month === month) {
+        //     today.isToday = true
+        //   }
+        // }
+        this.showDateArray.push(showDate)
+        showDate = {}
+      }
+      console.log(this.showDateArray)
+    },
+
+    getThisYMD() {
+      const date = new Date()
+      const thisYear = date.getFullYear()
+      const thisMonth = this.padZero(date.getMonth() + 1)
+      const thisDay = this.padZero(date.getDate())
+      const thisYMD = thisYear + '-' + thisMonth + '-' + thisDay
+      return thisYMD
     },
 
     // 对只有一位数字的情况前面补0
@@ -140,7 +204,7 @@ export default {
     updateTime() {
       setInterval(() => {
         this.getNowTime()
-      }, 1000)
+      }, 250)
     },
 
     // 得到时间（时分秒）
@@ -153,7 +217,7 @@ export default {
     updateTime2() {
       setInterval(() => {
         this.getNowTime2()
-      }, 1000)
+      }, 250)
     },
 
     // 方法2得到时间（时分秒）（转成字符串取第5个）
@@ -212,6 +276,7 @@ export default {
 .toggleMonth {
   float: right;
   line-height: 30px;
+  font-size: 28px;
 }
 
 .toggleMonth:hover {
@@ -220,7 +285,7 @@ export default {
 }
 
 .fa-angle-down {
-  padding: 0 12px 0 18px;
+  padding: 0 19px 0 40px;
 }
 
 .weekName {
@@ -251,8 +316,30 @@ export default {
 .weekDay {
   display: inline-block;
   text-align: center;
-  width: 58px;
+  width: 56px;
   padding: 10px 0;
+  border: 1px double transparent;
+}
+
+.weekDay:hover {
+  cursor: pointer;
+  background-color: lightblue;
+  border: 1px double black;
+}
+
+.calendar {
+  width: 408px;
+  background-color: whitesmoke;
+  margin: 40px auto;
+}
+
+.isToday {
+  color: #f00;
+  background-color: lightgreen;
+}
+
+.isLunarFirstDay {
+  border-bottom: 1px solid blue;
 }
 
 .lunarDay {
