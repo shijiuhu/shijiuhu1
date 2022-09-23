@@ -19,6 +19,7 @@
         <span class="contentItem devCom" @click="toProvinceTree">省市树</span>
         <span class="contentItem devCom" @click="toRandom">随机数</span>
         <span class="contentItem devCom" @click="toCalendar">日历时间</span>
+        <span class="contentItem devCom" @click="toNameplate">铭牌</span>
       </div>
     </div>
 
@@ -120,6 +121,10 @@ export default {
 
     toCalendar() {
       this.$router.push('/calendar')
+    },
+
+    toNameplate() {
+      this.$router.push('/nameplate')
     },
 
     getEnvironment() {

@@ -76,6 +76,10 @@ const routes = [
       title: '日历时间',
       keepAlive: false
     }
+  },
+  {
+    path: '/nameplate',
+    component: () => import('../view/Nameplate.vue')
   }
 ]
 
