@@ -12,13 +12,7 @@
     </div>
 
     <div class="weekName">
-      <span>日</span>
-      <span>一</span>
-      <span>二</span>
-      <span>三</span>
-      <span>四</span>
-      <span>五</span>
-      <span>六</span>
+      <span v-for="item in weekName" :key="item">{{ item }}</span>
     </div>
 
     <div class="weekNumber">
@@ -249,13 +243,14 @@ export default {
       lunarNowDate: '',
       showDateArray: [],
       calendarDate: new Date(),
+      weekName: ['日', '一', '二', '三', '四', '五', '六'],
       solarYearMonth: '',
       solarlunarDate: {},
       solarlunar20221008: {}
     }
   },
   created() {
-    // 首次加载调用一次获得时间，否则页面将有setInterval中1000ms的延迟再出现，不友好，这里使用两种方法展示
+    // 首次加载调用一次获得时间，否则页面将有setInterval中设置时间的延迟再出现，不友好，这里使用两种方法展示
     this.getNowTime()
     this.getNowTime2()
 
@@ -280,11 +275,18 @@ export default {
   },
   methods: {
     getSolarLunarDateData() {
+      // 原来new Date()中参数还可以写成逗号分隔的形式，并且数字和字符都行，数字为0或负数都可以，早知道之前的逻辑就不拼接字符串和前缀了；
+      // 但是已经写了，不想再大规模改了，就这样吧，以后有新功能再逗号分隔着用
+      console.log(new Date(2022, -1, -1), '-------------2022, -1, -1')
+      console.log(new Date(2022, 0, 0), '-------------2022, 0, 0')
+      console.log(new Date(2022, 1, 1), '-------------2022, 1, 1')
+      console.log(new Date(2022, 12, 1), '-------------2022, 12, 1')
+      console.log(new Date(2022, 12, 32), '-------------2022, 12, 32')
       this.solarlunarDate = solarlunar
       this.solarlunar20221008 = solarlunar.solar2lunar(2022, 10, 8);
     },
 
-    // 切换到上一个月
+    // 切换到上一个月，这里写成逗号分隔的形式可以直接month-1，原来不知道可以这样写
     previousMonth() {
       let year = this.calendarDate.getFullYear()
       let month = this.calendarDate.getMonth() + 1
@@ -299,7 +301,7 @@ export default {
       this.showCalendar(this.calendarDate)
     },
 
-    // 切换到下一个月
+    // 切换到下一个月，这里写成逗号分隔的形式可以直接month+1，原来不知道可以这样写
     nextMonth() {
       let year = this.calendarDate.getFullYear()
       let month = this.calendarDate.getMonth() + 1
@@ -543,7 +545,7 @@ export default {
   border: 1px double transparent;
 }
 
-.weekDay:hover {
+.weekDay2:hover {
   cursor: pointer;
   background-color: lightblue;
   border: 1px double black;
