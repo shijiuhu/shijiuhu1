@@ -508,8 +508,8 @@ export default {
   color: blue;
 }
 
-.fa-angle-down {
-  padding: 0 19px 0 40px;
+.fa {
+  padding: 0 20px 0 20px;
 }
 
 .weekName {
