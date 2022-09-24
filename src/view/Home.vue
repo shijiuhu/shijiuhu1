@@ -29,6 +29,7 @@
         <span class="contentItem devCom" @click="getEnvironment">获取本地开发或生产环境</span>
         <span class="contentItem devCom" @click="getLocalJson">获取本地json文件</span>
         <span class="contentItem devCom" @click="staticSrc">img调用静态src</span>
+        <span class="contentItem devCom" @click="showDateComDes">时间插件查看</span>
       </div>
     </div>
 
@@ -148,6 +149,10 @@ export default {
       const dom = document.querySelector('.comments')
       dom.style.display = 'flex'
     },
+
+    showDateComDes() {
+      this.$router.push('/dateComDes')
+    },
   }
 };
 </script>
@@ -165,6 +170,8 @@ export default {
   text-align: center;
   width: 60%;
   margin: 0 auto;
+  height: 50px;
+  line-height: 50px;
 }
 
 .contentItem {

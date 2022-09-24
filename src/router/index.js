@@ -75,11 +75,22 @@ const routes = [
     meta: {
       title: '日历时间',
       keepAlive: false
+    },
+  },
+  {
+    path: '/dateComDes',
+    component: () => import('../view/calendar/DateComDes.vue'),
+    meta: {
+      title: '日期组件描述'
     }
   },
   {
     path: '/nameplate',
-    component: () => import('../view/Nameplate.vue')
+    component: () => import('../view/Nameplate.vue'),
+    meta: {
+      title: '铭牌',
+      keepAlive: false
+    }
   }
 ]
 
