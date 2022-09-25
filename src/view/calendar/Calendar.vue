@@ -6,12 +6,12 @@
     </div>
 
     <div class="dateInfo">
-      <span v-if="dateType === '日'" class="solarDate" @click="switchToMonth" title="点击切换月份">{{ solarYearMonth }}</span>
-      <span v-else-if="dateType === '月'" class="solarDate" @click="switchToYear" title="点击切换年份">{{ solarYear }}</span>
+      <span v-if="dateType === '日'" class="solarDate" @click="showMonthCalendar(0, '')" title="点击切换月份">{{ solarYearMonth }}</span>
+      <span v-else-if="dateType === '月'" class="solarDate" @click="showYearCalendar(0)" title="点击切换年份">{{ solarYear }}</span>
       <span v-else class="solarDate">{{ solarYearDecade }}</span>
-      <span class="backToToday" @click="backToToday" :title="backToTodayTitle">今日</span>
-      <i class="toggleMonth fa fa-angle-down" @click="nextMonth"></i>
-      <i class="toggleMonth fa fa-angle-up" @click="previousMonth"></i>
+      <span class="backToToday" @click="showDayCalendar(0, '')" :title="backToTodayTitle">今日</span>
+      <i class="toggleMonth fa fa-angle-down" @click="previousOrNextDate(1)"></i>
+      <i class="toggleMonth fa fa-angle-up" @click="previousOrNextDate(-1)"></i>
     </div>
 
     <div class="weekName">
@@ -30,14 +30,16 @@
     </div>
 
     <div class="monthNumber" v-show="monthArray.length">
-      <div v-for="item in monthArray" :key="item" class="monthItem" :class="{'isThisMonth': item.isThisMonth }">
-        <span @click="showMonthCalendar(item.month)">{{ item.month }}月</span>
+      <div v-for="item in monthArray" :key="item" class="monthItem" :class="{'isThisMonth': item.isThisMonth }"
+        @click="showDayCalendar(0, item.month)">
+        <span>{{ item.month }}月</span>
       </div>
     </div>
 
     <div class="yearNumber" v-show="yearArray.length">
-      <div v-for="item in yearArray" :key="item" class="yearItem" :class="{'isThisYear': item.isThisYear }">
-        <span @click="showYearCalendar(item.year)">{{ item.year }}</span>
+      <div v-for="item in yearArray" :key="item" class="yearItem" :class="{'isThisYear': item.isThisYear }"
+        @click="showMonthCalendar(0, item.year)">
+        <span>{{ item.year }}</span>
       </div>
     </div>
   </div>
@@ -55,11 +57,12 @@ export default {
       nowTime2: '',
       nowDate: '',
       lunarNowDate: '',
-      
+
       calendarDate: new Date(),
       weekName: ['日', '一', '二', '三', '四', '五', '六'],
       backToTodayTitle: '',
       dateType: '日',
+      previousOrNext: 0,
 
       dayArray: [],
       monthArray: [],
@@ -82,7 +85,7 @@ export default {
     this.updateDate() // 调用得到公历日期（年月日）
     this.updateLunarDate() // 调用得到农历日期（月日）
 
-    this.showDayCalendar(this.calendarDate)
+    this.showDayCalendar(0, '') // 刚打开页面时要展示当天的数据
     this.setBackToTodayTitle()
   },
   watch: {
@@ -94,93 +97,60 @@ export default {
       }
     }
   },
+  computed: {
+    calendarYear() {
+      return this.calendarDate.getFullYear()
+    },
+    calendarMonth() {
+      return this.calendarDate.getMonth()
+    }
+  },
   methods: {
-    switchToMonth() {
-      this.dateType = '月'
-      this.solarYear = this.calendarDate.getFullYear() + '年'
-
-      this.weekName = []
+    showDayCalendar(previousOrNext, month) {
+      // 1.month有值，说明指定了具体的日期，所以一定是点击月份跳转
+      // 2.previousOrNext不为0，说明是切换上下月
+      // 3.previousOrNext为0，说明是初始化、回今日
+      if (month) {
+        this.calendarDate = new Date(this.calendarYear, month - 1, 1)
+      } else if (previousOrNext) {
+        this.calendarDate = new Date(this.calendarYear, this.calendarMonth + previousOrNext, 1)
+      } else {
+        this.calendarDate = new Date()
+      }
+      this.solarYearMonth = this.calendarYear + '年' + this.padZero(this.calendarMonth + 1) + '月'
+      this.dateType = '日'
       this.dayArray = []
-
-      this.monthArray = [ 
-        { month: 1, year: this.calendarDate.getFullYear() }, { month: 2, year: this.calendarDate.getFullYear() }, 
-        { month: 3, year: this.calendarDate.getFullYear() }, { month: 4, year: this.calendarDate.getFullYear() }, 
-        { month: 5, year: this.calendarDate.getFullYear() }, { month: 6, year: this.calendarDate.getFullYear() }, 
-        { month: 7, year: this.calendarDate.getFullYear() }, { month: 8, year: this.calendarDate.getFullYear() }, 
-        { month: 9, year: this.calendarDate.getFullYear() }, { month: 10, year: this.calendarDate.getFullYear() }, 
-        { month: 11, year: this.calendarDate.getFullYear() }, { month: 12, year: this.calendarDate.getFullYear() }
-      ]
-      for (let i = 0; i < 12; i++) {
-        if (new Date().getFullYear() === this.monthArray[i].year && new Date().getMonth() === this.monthArray[i].month - 1) {
-          this.monthArray[i].isThisMonth = true
-        }
-      }
-    },
-
-    switchToYear() {
-      const prefix = this.solarYear.substring(0, 3)
-      const startYear = prefix + '0'
-      const endYear = prefix + '9'
-      this.solarYearDecade = startYear + '-' + endYear
-      this.dateType = '年'
-      let solarYearObj = {}
-      for (let i = startYear; i <= endYear; i++) {
-        solarYearObj.year = i
-        if (new Date().getFullYear() === i) {
-          solarYearObj.isThisYear = true
-        }
-        this.yearArray.push(solarYearObj)
-        solarYearObj = {}
-      }
-      this.monthArray = []
-    },
-
-    showDayCalendar(date) {
-      const year = date.getFullYear()
-      const month = this.padZero(date.getMonth() + 1)
-      this.solarYearMonth = year + '年' + month + '月'
-
-      // 对当月第一天前的日期都置为空，这里因为solarlunar.solar2lunar方法得到的nWeek星期天数字为7，故要重置为0
-      let monthFirstDayWeek = solarlunar.solar2lunar(year, month, this.padZero(1)).nWeek
-      monthFirstDayWeek = monthFirstDayWeek === 7 ? 0 : monthFirstDayWeek
-      for (let i = -monthFirstDayWeek; i < 0; i++) {
-        this.dayArray.push('')
-      }
-
-      // 闰年的2月要置为29天
-      const monthDayArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-      if (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)) {
-        monthDayArray[1] = 29
-      }
-      const monthDay = monthDayArray[date.getMonth()]
-
       let showDate = {}
-      let solarLunarDay, lunarDay, lunarTerm
-      for (let i = 1; i <= monthDay; i++) {
-        // 这里设置阳历的日，直接放入i，比方法2取日期再取日的值要简洁一些
+      let solarLunarDay, lunarDay, term, monthCn, dayCn
+      for (let i = 1; i <= this.getMonthDay(); i++) {
         showDate.solarDay = i
 
-        // 这里放入年月是为了后续比较是否是当天
-        showDate.year = year
-        showDate.month = month
-
-        // 这里设置农历的日，同时记录初一，在页面上特别展示，如果有节气，则用节气取代原有的农历日
-        solarLunarDay = solarlunar.solar2lunar(year, month, this.padZero(i))
-        lunarDay = solarLunarDay.dayCn
-        showDate.isLunarFirstDay = lunarDay === '初一' ? true : false
-        lunarTerm = solarLunarDay.term
-        showDate.lunarDay = !lunarTerm ? lunarDay: lunarTerm
-
-        // 判断是否当天，在页面上特别展示
-        if (this.getThisYMD() === year + '-' + month + '-' + this.padZero(i)) {
-          showDate.isThisDay = true
+        solarLunarDay = solarlunar.solar2lunar(this.calendarYear, this.calendarMonth + 1, i)
+        // 对当月第一天前的日期都置为空，这里因为solarlunar.solar2lunar方法得到的nWeek星期天数字为7，故要重置为0
+        if (i === 1) {
+          const monthFirstDayWeek = solarLunarDay.nWeek === 7 ? 0 : solarLunarDay.nWeek
+          for (let i = -monthFirstDayWeek; i < 0; i++) {
+            this.dayArray.push('')
+          }          
         }
+        
+        // 这里设置农历的日，在页面上特别展示，优先级如：清明 > 二月 > 初一
+        term = solarLunarDay.term
+        monthCn = solarLunarDay.monthCn
+        dayCn = solarLunarDay.dayCn
+
+        showDate.isLunarFirstDay = dayCn === '初一'
+        showDate.lunarDay = term ? term : ( showDate.isLunarFirstDay ? monthCn : dayCn )
+        showDate.isThisDay = this.isThisDay(i)
+
         this.dayArray.push(showDate)
         showDate = {}
       }
-      this.dateType = '日'
-      // 使用下面这种做法就不需要在上面for循环中使用if，从而只需要判断一次，
-      // 但代码不够简洁，而for循环的量也不大，性能提高不明显，故不用，仅做参考
+      this.weekName = ['日', '一', '二', '三', '四', '五', '六']
+      this.monthArray = []
+      this.yearArray = []
+      // 使用下面这种做法就不需要在上面for循环中使用isThisDay判断，从而只需要判断一次，
+      // 但这段代码还要单独拿出来处理，完整性受到破坏，而for循环的量也不大，性能提高不明显，故不用，仅做参考
       // const todayIndex = new Date().getDate() + monthFirstDayWeek - 1
       // if (todayIndex <= this.dayArray.length - 1) {
       //   const today = this.dayArray[todayIndex]
@@ -191,20 +161,24 @@ export default {
       // console.log(this.dayArray)
     },
 
-    showMonthCalendar(value) {
-      const year = this.calendarDate.getFullYear()
-      this.calendarDate = new Date(year, value - 1, 1)
-      this.showDayCalendar(this.calendarDate)
-      this.weekName = ['日', '一', '二', '三', '四', '五', '六']
-      this.monthArray = []
-      this.yearArray = []
-    },
-
-    showYearCalendar(value) {
+    showMonthCalendar(previousOrNext, value) {
+      // 1.value有值，说明指定了具体的日期，所以一定是点击年份跳转
+      // 2.previousOrNext不为0，说明是切换上下月
+      // 3.previousOrNext为0，说明是由天日期切换成月日期
+      if (value) {
+        this.calendarDate = new Date(value , this.calendarMonth, 1)
+      } else if (previousOrNext) {
+        this.calendarDate = new Date(this.calendarYear + previousOrNext, this.calendarMonth, 1)
+        value = this.calendarYear
+      } else {
+        value = this.calendarYear
+      }
+      this.dateType = '月'
+      this.weekName = []
+      this.dayArray = []
       this.yearArray = []
       this.solarYear = value + '年'
-      this.calendarDate = new Date(value, 0, 1)
-      this.monthArray = [ 
+      this.monthArray = [
         { month: 1, year: value }, { month: 2, year: value }, 
         { month: 3, year: value }, { month: 4, year: value }, 
         { month: 5, year: value }, { month: 6, year: value }, 
@@ -213,141 +187,47 @@ export default {
         { month: 11, year: value }, { month: 12, year: value }
       ]
       for (let i = 0; i < 12; i++) {
+        this.monthArray[i].year = value
         if (new Date().getFullYear() === this.monthArray[i].year && new Date().getMonth() === this.monthArray[i].month - 1) {
-          this.monthArray[i].isThisYear = true
+          this.monthArray[i].isThisMonth = true
         }
-      }
-      this.dateType = '月'
-    },
-
-    // 切换到上一个月，这里写成逗号分隔的形式可以直接month-1，原来不知道可以这样写
-    previousMonth() {
-      switch(this.dateType) {
-        case '日': {
-          let year = this.calendarDate.getFullYear()
-          let month = this.calendarDate.getMonth() + 1
-          if (month == 1) {
-            year = year - 1
-            month = 12
-          } else {
-            month = month - 1
-          }
-          this.calendarDate = new Date(year + '-' + this.padZero(month) + '-01')
-          this.dayArray = []
-          this.showDayCalendar(this.calendarDate)
-          this.weekName = ['日', '一', '二', '三', '四', '五', '六']
-          this.monthArray = []
-        }
-        break;
-
-        case '月': {
-          const year = this.calendarDate.getFullYear()
-          const month = this.calendarDate.getMonth()
-          const day = this.calendarDate.getDate()
-          this.calendarDate = new Date(year - 1, month, day)
-          this.solarYear = this.calendarDate.getFullYear() + '年'
-          this.monthArray = [
-            { month: 1, year: this.calendarDate.getFullYear() }, { month: 2, year: this.calendarDate.getFullYear() }, 
-            { month: 3, year: this.calendarDate.getFullYear() }, { month: 4, year: this.calendarDate.getFullYear() }, 
-            { month: 5, year: this.calendarDate.getFullYear() }, { month: 6, year: this.calendarDate.getFullYear() }, 
-            { month: 7, year: this.calendarDate.getFullYear() }, { month: 8, year: this.calendarDate.getFullYear() }, 
-            { month: 9, year: this.calendarDate.getFullYear() }, { month: 10, year: this.calendarDate.getFullYear() }, 
-            { month: 11, year: this.calendarDate.getFullYear() }, { month: 12, year: this.calendarDate.getFullYear() }
-          ]
-          for (let i = 0; i < 12; i++) {
-            if (new Date().getFullYear() === this.monthArray[i].year && new Date().getMonth() === this.monthArray[i].month - 1) {
-              this.monthArray[i].isThisMonth = true
-            }
-          }
-        }
-        break;
-
-        case '年': {
-          console.log('111111111')
-          const prefix = this.solarYear.substring(0, 3)
-          const startYear = prefix - 1 + '0'
-          const endYear = prefix - 1 + '9'
-          this.calendarDate = new Date(this.solarYear)
-          this.solarYear = startYear
-          this.solarYearDecade = startYear + '-' + endYear
-          this.yearArray = []
-
-          let solarYearObj = {}
-          for (let i = startYear; i <= endYear; i++) {
-            solarYearObj.year = i
-            if (new Date().getFullYear() === i) {
-              solarYearObj.isThisYear = true
-            }
-            this.yearArray.push(solarYearObj)
-            solarYearObj = {}
-          }
-        }
-        break;
       }
     },
 
-    // 切换到下一个月，这里写成逗号分隔的形式可以直接month+1，原来不知道可以这样写
-    nextMonth() {
+    showYearCalendar(previousOrNext) {
+      const prefixNumber = parseInt(this.solarYear.substring(0, 3))
+      const startYear = prefixNumber + previousOrNext + '0'
+      const endYear = prefixNumber + previousOrNext + '9'
+
+      this.solarYear = startYear
+      this.solarYearDecade = startYear + '-' + endYear
+      this.dateType = '年'
+      this.yearArray = []
+
+      let showYearDate = {}
+      for (let i = startYear; i <= endYear; i++) {
+        showYearDate.year = i
+        if (new Date().getFullYear() === i) {
+          showYearDate.isThisYear = true
+        }
+        this.yearArray.push(showYearDate)
+        showYearDate = {}
+      }
+      this.monthArray = []
+    },
+
+    // 向上向下切换年月
+    previousOrNextDate(number) {
       switch(this.dateType) {
-        case '日': {
-          let year = this.calendarDate.getFullYear()
-          let month = this.calendarDate.getMonth() + 1
-          if (month == 12) {
-            year = year + 1
-            month = 1
-          } else {
-            month = month + 1
-          }
-          this.calendarDate = new Date(year + '-' + this.padZero(month) + '-01')
-          this.dayArray = []
-          this.showDayCalendar(this.calendarDate)
-          this.weekName = ['日', '一', '二', '三', '四', '五', '六']
-          this.monthArray = []
-        }
-        break;
-
-        case '月': {
-          const year = this.calendarDate.getFullYear()
-          const month = this.calendarDate.getMonth()
-          const day = this.calendarDate.getDate()
-          this.calendarDate = new Date(year + 1, month, day)
-          this.solarYear = this.calendarDate.getFullYear() + '年'
-          this.monthArray = [
-            { month: 1, year: this.calendarDate.getFullYear() }, { month: 2, year: this.calendarDate.getFullYear() }, 
-            { month: 3, year: this.calendarDate.getFullYear() }, { month: 4, year: this.calendarDate.getFullYear() }, 
-            { month: 5, year: this.calendarDate.getFullYear() }, { month: 6, year: this.calendarDate.getFullYear() }, 
-            { month: 7, year: this.calendarDate.getFullYear() }, { month: 8, year: this.calendarDate.getFullYear() }, 
-            { month: 9, year: this.calendarDate.getFullYear() }, { month: 10, year: this.calendarDate.getFullYear() }, 
-            { month: 11, year: this.calendarDate.getFullYear() }, { month: 12, year: this.calendarDate.getFullYear() }
-          ]
-          for (let i = 0; i < 12; i++) {
-            if (new Date().getFullYear() === this.monthArray[i].year && new Date().getMonth() === this.monthArray[i].month - 1) {
-              this.monthArray[i].isThisMonth = true
-            }
-          }
-        }
-        break;
-
-        case '年': {
-          const prefix = this.solarYear.substring(0, 3)
-          const startYear = parseInt(prefix) + 1 + '0'
-          const endYear = parseInt(prefix) + 1 + '9'
-          this.calendarDate = new Date(this.solarYear)
-          this.solarYear = startYear
-          this.solarYearDecade = startYear + '-' + endYear
-          this.yearArray = []
-
-          let solarYearObj = {}
-          for (let i = startYear; i <= endYear; i++) {
-            solarYearObj.year = i
-            if (new Date().getFullYear() === i) {
-              solarYearObj.isThisYear = true
-            }
-            this.yearArray.push(solarYearObj)
-            solarYearObj = {}
-          }
-        }
-        break;
+        case '日':
+          this.showDayCalendar(number, '')
+          break;
+        case '月':
+          this.showMonthCalendar(number, '')
+          break;
+        case '年': 
+          this.showYearCalendar(number)
+          break;
       }
     },
 
@@ -356,61 +236,23 @@ export default {
       this.backToTodayTitle = '点击返回今日' + this.nowDate
     },
 
-    // 点击回到今日按钮，重置时间为当天，因为当天没有其他特别展示，所以其实就是当月
-    backToToday() {
-      this.calendarDate = new Date()
-      this.dayArray = []
-      this.showDayCalendar(this.calendarDate)
-      this.weekName = ['日', '一', '二', '三', '四', '五', '六']
-      this.monthArray = []
-    },
-
-    // 展示日历方法2，和方法1比有些不一样，但我仍然保留，可以参考，后续有些设置当天和初一这里没做了，都一样
-    showDayCalendar2(date) {
-      const year = date.getFullYear()
-      const month = this.padZero(date.getMonth() + 1)
-      this.solarYearMonth = year + '年' + month + '月'
-
-      // 对当月第一天前的日期都置为空
-      const monthFirstDayWeek = new Date(year + '-' + month + '-01').getDay()
-      for (let i = -monthFirstDayWeek; i < 0; i++) {
-        this.dayArray.push('')
-      }
-
+    // 得到月份的天数
+    getMonthDay() {
       // 闰年的2月要置为29天
       const monthDayArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-      if (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)) {
+      if (this.calendarYear % 400 === 0 || (this.calendarYear % 100 !== 0 && this.calendarYear % 4 === 0)) {
         monthDayArray[1] = 29
       }
-      const monthDay = monthDayArray[date.getMonth()]
-
-      let showDate = {}
-      let formatStr, lunarDay, lunarMonthDay, lunarTerm
-      for (let i = 1; i <= monthDay; i++) {
-        // 这里设置阳历的日
-        formatStr = year + '-' + month + '-' + this.padZero(i)
-        showDate.solarDay = new Date(formatStr).getDate()
-
-        // 这里设置农历的日
-        lunarMonthDay = lunarDate.getLunar(formatStr)
-        lunarDay = lunarMonthDay.substring(lunarMonthDay.indexOf('月')+1)
-        lunarTerm = solarlunar.solar2lunar(year, month, this.padZero(i)).term
-        showDate.lunarDay = !lunarTerm ? lunarDay : lunarTerm
-
-        this.dayArray.push(showDate)
-        showDate = {}
-      }
-      console.log(this.dayArray)
+      return monthDayArray[this.calendarMonth]
     },
 
-    // 返回一个yyyy-MM-dd日期格式的字符串
-    getThisYMD() {
+    // 判断是否当天，在页面上特别展示
+    isThisDay(number) {
       const date = new Date()
-      const thisYear = date.getFullYear()
-      const thisMonth = this.padZero(date.getMonth() + 1)
-      const thisDay = this.padZero(date.getDate())
-      const thisYMD = thisYear + '-' + thisMonth + '-' + thisDay
-      return thisYMD
+      const thisYear = date.getFullYear() === this.calendarYear
+      const thisMonth = date.getMonth() === this.calendarMonth
+      const thisDay = date.getDate() === number
+      return thisYear && thisMonth && thisDay
     },
 
     // 对只有一位数字的情况前面补0
