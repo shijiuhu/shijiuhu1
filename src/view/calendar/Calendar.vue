@@ -1,45 +1,47 @@
 <template>
-  <div class="calendar">
-    <div class="calendarTitle">
-      <div class="nowTime">{{ nowTime }} {{ nowTime2 }}</div>
-      <div class="nowDate">{{ nowDate }} {{ lunarNowDate }}</div>
-    </div>
+  <div class="root">
+    <div class="calendar">
+      <div class="calendarTitle">
+        <div class="nowTime">{{ nowTime }} {{ nowTime2 }}</div>
+        <div class="nowDate">{{ nowDate }} {{ lunarNowDate }}</div>
+      </div>
 
-    <div class="dateInfo">
-      <span v-if="dateType === '日'" class="solarDate" @click="showMonthCalendar(0, '')" title="点击切换月份">{{ solarYearMonth }}</span>
-      <span v-else-if="dateType === '月'" class="solarDate" @click="showYearCalendar(0)" title="点击切换年份">{{ solarYear }}</span>
-      <span v-else class="solarDate">{{ solarYearDecade }}</span>
-      <span class="backToToday" @click="showDayCalendar(0, '')" :title="backToTodayTitle">今日</span>
-      <i class="toggleMonth fa fa-angle-down" @click="previousOrNextDate(1)"></i>
-      <i class="toggleMonth fa fa-angle-up" @click="previousOrNextDate(-1)"></i>
-    </div>
+      <div class="dateInfo">
+        <span v-if="dateType === '日'" class="solarDate" @click="showMonthCalendar(0, '')" title="点击切换月份">{{ solarYearMonth }}</span>
+        <span v-else-if="dateType === '月'" class="solarDate" @click="showYearCalendar(0)" title="点击切换年份">{{ solarYear }}</span>
+        <span v-else class="solarDate">{{ solarYearDecade }}</span>
+        <span class="backToToday" @click="showDayCalendar(0, '')" :title="backToTodayTitle">今日</span>
+        <i class="toggleMonth fa fa-angle-down" @click="previousOrNextDate(1)"></i>
+        <i class="toggleMonth fa fa-angle-up" @click="previousOrNextDate(-1)"></i>
+      </div>
 
-    <div class="weekName">
-      <span v-for="item in weekName" :key="item">{{ item }}</span>
-    </div>
-    <div class="dayNumber" v-show="dayArray.length">
-      <div v-for="item in dayArray" :key="item" class="dayItem" 
-        :class="{ 'dayItem2': !!item.solarDay, 'isThisDay': item.isThisDay }">
-        <div class="solarDay">{{ item.solarDay }}</div>
-        <div class="lunarDay">
-          <span :class="{ 'isLunarFirstDay': item.isLunarFirstDay }">
-            {{ item.lunarDay }}
-          </span>
+      <div class="weekName">
+        <span v-for="item in weekName" :key="item">{{ item }}</span>
+      </div>
+      <div class="dayNumber" v-show="dayArray.length">
+        <div v-for="item in dayArray" :key="item" class="dayItem" 
+          :class="{ 'dayItem2': !!item.solarDay, 'isThisDay': item.isThisDay }">
+          <div class="solarDay">{{ item.solarDay }}</div>
+          <div class="lunarDay">
+            <span :class="{ 'isLunarFirstDay': item.isLunarFirstDay }">
+              {{ item.lunarDay }}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="monthNumber" v-show="monthArray.length">
-      <div v-for="item in monthArray" :key="item" class="monthItem" :class="{'isThisMonth': item.isThisMonth }"
-        @click="showDayCalendar(0, item.month)">
-        <span>{{ item.month }}月</span>
+      <div class="monthNumber" v-show="monthArray.length">
+        <div v-for="item in monthArray" :key="item" class="monthItem" :class="{'isThisMonth': item.isThisMonth }"
+          @click="showDayCalendar(0, item.month)">
+          <span>{{ item.month }}月</span>
+        </div>
       </div>
-    </div>
 
-    <div class="yearNumber" v-show="yearArray.length">
-      <div v-for="item in yearArray" :key="item" class="yearItem" :class="{'isThisYear': item.isThisYear }"
-        @click="showMonthCalendar(0, item.year)">
-        <span>{{ item.year }}</span>
+      <div class="yearNumber" v-show="yearArray.length">
+        <div v-for="item in yearArray" :key="item" class="yearItem" :class="{'isThisYear': item.isThisYear }"
+          @click="showMonthCalendar(0, item.year)">
+          <span>{{ item.year }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -345,6 +347,8 @@ export default {
   box-shadow:0 0 3px 0 red;
   color: blue;
   font-size: 8px;
+  /* welink设置的护眼色值 */
+  background-color: rgb(204, 232, 207); 
 }
 
 .backToToday:hover {
@@ -414,7 +418,10 @@ export default {
 .calendar {
   width: 408px;
   background-color: whitesmoke;
-  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .isThisDay, .isThisMonth, .isThisYear {
