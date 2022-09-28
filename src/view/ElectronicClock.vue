@@ -5,7 +5,7 @@
       <span v-else>{{ count }}</span>
     </div>
     <div class="button">
-      <div class="clock" @click="showNowDate"><span>时钟</span></div>
+      <div class="clock" @click="showNowTime"><span>时钟</span></div>
       <div class="counter" @click="startCount" v-if="!counting"><span>计时器</span></div>
       <div class="stop" @click="stopCount" v-if="counting"><span>{{ stopOrContinue }}</span></div>
       <div class="reset" @click="resetCount" v-if="counting"><span>重置</span></div>
@@ -24,51 +24,62 @@ export default {
       setCount: null,
       stopOrContinue: '暂停',
       periodTime: 0,
-      lastPeridTime: 0
+      lastPeriodTime: 0
     }
   },
   created() {
-    this.showNowDate()
+    // 打开页面让其展示现在的时间
+    this.showNowTime()
   },
   methods: {
+    // 开始计时
     startCount() {
       this.counting = true
       const oldDate = new Date().getTime() / 1000
-      this.setCount = setInterval(() => {
-        this.getClock(oldDate)
-      }, 250)
+      if (!this.setCount) {
+        this.setCount = setInterval(() => {
+          this.getClock(oldDate)
+        }, 250)
+      }
     },
 
+    // 计时的主体代码
     getClock(oldDate) {
-      let newDate = 0
       let h, m, s
-      newDate = new Date().getTime() / 1000
-      this.periodTime = this.lastPeridTime + newDate - oldDate
-      h = Math.floor( this.periodTime / ( 60 * 60) )
+      let newDate = new Date().getTime() / 1000
+      this.periodTime = this.lastPeriodTime + newDate - oldDate
+      h = Math.floor( this.periodTime / ( 60 * 60 ) )
       m = Math.floor( ( this.periodTime - h * 60 * 60 ) / 60 )
       s = Math.floor( this.periodTime - h * 60 * 60 - m * 60 )
       this.count = this.padZero(h) + ':' + this.padZero(m) + ':' + this.padZero(s)
     },
 
+    // 暂停计时
     stopCount() {
       if (this.stopOrContinue === '暂停') {
         clearInterval(this.setCount)
+        this.setCount = null
+        this.lastPeriodTime = this.periodTime
+        this.stopOrContinue = '继续'
       } else {
-        
+        this.startCount()
+        this.stopOrContinue = '暂停'
       }
-      this.stopOrContinue = this.stopOrContinue === '暂停' ? '继续' : '暂停'
     },
 
+    // 重置计时
     resetCount() {
       clearInterval(this.setCount)
+      this.setCount = null
       this.count = '00:00:00'
-      this.counter()
+      this.lastPeriodTime = 0
+      this.stopOrContinue = '暂停'
+      this.startCount()
     },
 
-    showNowDate() {
+    // 展示现在的时间
+    showNowTime() {
       this.counting = false
-      clearInterval(this.setCount)
-
       let date, hour, minute, second
       setInterval(() => {
         date = new Date()
@@ -79,6 +90,7 @@ export default {
       }, 250)
     },
 
+    // 若只有一位前面补零
     padZero(str) {
       if (!str) {
         return '00'
@@ -100,7 +112,6 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid black;
 }
 
 .nowTime {
@@ -154,15 +165,7 @@ export default {
   text-align: center;
 }
 
-.stop {
-  flex: 1;
-  border-radius: 10px;
-  margin-left: 20px;
-  padding-left: 10px;
-  text-align: center;
-}
-
-.reset {
+.stop, .reset {
   flex: 1;
   border-radius: 10px;
   margin-left: 20px;
