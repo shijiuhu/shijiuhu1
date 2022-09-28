@@ -85,6 +85,13 @@ const routes = [
     }
   },
   {
+    path: '/electronicClock',
+    component: () => import('../view/ElectronicClock.vue'),
+    meta: {
+      title: '电子钟'
+    }
+  },
+  {
     path: '/nameplate',
     component: () => import('../view/Nameplate.vue'),
     meta: {
