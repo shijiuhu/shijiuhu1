@@ -112,4 +112,10 @@ const router = new createRouter({
   history: createWebHistory()
 })
 
+// 设置每个路由的标题，为防止出现undefined不友好显示，最后或上'shijiuhu1'的项目名称
+router.beforeEach((to, from, next) => {
+  document.title = to.matched[0].meta.title || 'shijiuhu1'
+  next()
+})
+
 export default router
