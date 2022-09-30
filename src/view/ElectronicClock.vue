@@ -1,14 +1,14 @@
 <template>
   <div class="root">
     <div class="nowTime">
-      <span v-if="!counting">{{ nowTime }}</span>
+      <span v-if="!countState">{{ nowTime }}</span>
       <span v-else>{{ count }}</span>
     </div>
     <div class="button">
       <div class="clock" @click="showNowTime"><span>时钟</span></div>
-      <div class="counter" @click="startCount" v-if="!counting"><span>计时器</span></div>
-      <div class="stop" @click="stopCount" v-if="counting"><span>{{ stopOrContinue }}</span></div>
-      <div class="reset" @click="resetCount" v-if="counting"><span>重置</span></div>
+      <div class="counter" @click="readyCount" v-if="!countState"><span>计时器</span></div>
+      <div class="stop" @click="toggleCount" v-if="countState"><span>{{ toggleState }}</span></div>
+      <div class="reset" @click="resetCount" v-if="countState"><span>重置</span></div>
     </div>
   </div>
 </template>
@@ -19,10 +19,10 @@ export default {
   data() {
     return {
       nowTime: '',
-      count: '00:00:00',
-      counting: false,
+      count: '00:00:00.0',
+      countState: false,
       setCount: null,
-      stopOrContinue: '暂停',
+      toggleState: '开始',
       periodTime: 0,
       lastPeriodTime: 0
     }
@@ -32,38 +32,38 @@ export default {
     this.showNowTime()
   },
   methods: {
-    // 开始计时
-    startCount() {
-      this.counting = true
-      const oldDate = new Date().getTime() / 1000
-      if (!this.setCount) {
-        this.setCount = setInterval(() => {
-          this.getClock(oldDate)
-        }, 250)
-      }
+    // 进入计时状态，切换显示按钮
+    readyCount() {
+      this.countState = true
     },
 
     // 计时的主体代码
     getClock(oldDate) {
-      let h, m, s
+      let h, m, s, ms
       let newDate = new Date().getTime() / 1000
       this.periodTime = this.lastPeriodTime + newDate - oldDate
       h = Math.floor( this.periodTime / ( 60 * 60 ) )
       m = Math.floor( ( this.periodTime - h * 60 * 60 ) / 60 )
       s = Math.floor( this.periodTime - h * 60 * 60 - m * 60 )
-      this.count = this.padZero(h) + ':' + this.padZero(m) + ':' + this.padZero(s)
+      ms = Math.floor(((this.periodTime - h * 60 * 60 - m * 60 - s) * 10).toFixed(1))
+      this.count = this.padZero(h) + ':' + this.padZero(m) + ':' + this.padZero(s) + '.' + ms
     },
 
-    // 暂停计时
-    stopCount() {
-      if (this.stopOrContinue === '暂停') {
+    // 开始计时、继续计时、暂停计时
+    toggleCount() {
+      if (this.toggleState === '开始' || this.toggleState === '继续') {
+        this.toggleState = '暂停'
+        const oldDate = new Date().getTime() / 1000
+        if (!this.setCount) {
+          this.setCount = setInterval(() => {
+            this.getClock(oldDate)
+          }, 100)
+        }
+      } else if (this.toggleState === '暂停') {
         clearInterval(this.setCount)
         this.setCount = null
         this.lastPeriodTime = this.periodTime
-        this.stopOrContinue = '继续'
-      } else {
-        this.startCount()
-        this.stopOrContinue = '暂停'
+        this.toggleState = '继续'
       }
     },
 
@@ -71,15 +71,14 @@ export default {
     resetCount() {
       clearInterval(this.setCount)
       this.setCount = null
-      this.count = '00:00:00'
+      this.count = '00:00:00.0'
       this.lastPeriodTime = 0
-      this.stopOrContinue = '暂停'
-      this.startCount()
+      this.toggleState = '开始'
     },
 
     // 展示现在的时间
     showNowTime() {
-      this.counting = false
+      this.countState = false
       let date, hour, minute, second
       setInterval(() => {
         date = new Date()
