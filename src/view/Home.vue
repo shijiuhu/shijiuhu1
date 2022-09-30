@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import { request } from "../network/index.js"
-import comments from "@/common/comments";
+import { request } from "network/index.js"
+import comments from "common/comments";
 
 export default {
   name: "Home",

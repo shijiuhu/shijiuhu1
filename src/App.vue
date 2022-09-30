@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <!-- <img alt="Vue logo" src="./assets/img/logo.png"> -->
+    <!-- <img alt="Vue logo" src="assets/img/logo.png"> -->
     <router-link to="/login"></router-link>
     <!-- <router-link to="/fruits/apple">苹果</router-link>&nbsp; -->
     <!-- <router-link to="/fruits/orange">橘子</router-link>&nbsp; -->

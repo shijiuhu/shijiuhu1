@@ -9,7 +9,7 @@
   </div>
   <div class="main">
     <div class="logo">
-      <img src="../assets/img/11.png" />
+      <img src="assets/img/11.png" />
     </div>
     <div class="title">
       2015年度总部信息化运维服务及应用系统使用满意度调查表
@@ -425,8 +425,4 @@ export default {
 .content, .subcontent, .subcontent1, .btn{
   text-align: left;
 }
-
-/* table {
-  margin: 0 auto;
-} */
 </style>

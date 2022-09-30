@@ -7,7 +7,7 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import('../view/Login.vue'),
+    component: () => import('view/Login.vue'),
     meta: {
       title: '登录',
       keepAlive: false
@@ -15,14 +15,14 @@ const routes = [
   },
   {
     path: '/home',
-    component: () => import('../view/Home.vue'),
+    component: () => import('view/Home.vue'),
     meta: {
       title: '首页'
     }
   },
   {
     path: '/questionNaire',
-    component: () => import('../view/QuestionNaire.vue'),
+    component: () => import('view/QuestionNaire.vue'),
     meta: {
       title: '调查问卷',
       keepAlive: false
@@ -36,7 +36,7 @@ const routes = [
     children: [
       {
         path: 'apple',
-        component: () => import('../view/i18nExample/Apple.vue'),
+        component: () => import('view/i18nExample/Apple.vue'),
         meta: {
           title: '苹果',
           keepAlive: false
@@ -44,7 +44,7 @@ const routes = [
       },
       {
         path: 'orange',
-        component: () => import('../view/i18nExample/Orange.vue'),
+        component: () => import('view/i18nExample/Orange.vue'),
         meta: {
           title: '橘子',
           keepAlive: true
@@ -54,14 +54,14 @@ const routes = [
   },
   {
     path: '/testMore',
-    component: () => import('../view/TestMore.vue'),
+    component: () => import('view/TestMore.vue'),
     meta: {
       title: '测试更多'
     }
   },
   {
     path: '/provinceTree',
-    component: () => import('../view/provinceTree/ProvinceTree.vue'),
+    component: () => import('view/provinceTree/ProvinceTree.vue'),
     meta: {
       title: '省市树',
       keepAlive: true
@@ -69,7 +69,7 @@ const routes = [
   },
   {
     path: '/random',
-    component: () => import('../view/Random.vue'),
+    component: () => import('view/Random.vue'),
     meta: {
       title: '随机数',
       keepAlive: false
@@ -77,7 +77,7 @@ const routes = [
   },
   {
     path: '/calendar',
-    component: () => import('../view/calendar/Calendar.vue'),
+    component: () => import('view/calendar/Calendar.vue'),
     meta: {
       title: '日历时间',
       keepAlive: false
@@ -85,21 +85,21 @@ const routes = [
   },
   {
     path: '/dateComDes',
-    component: () => import('../view/calendar/DateComDes.vue'),
+    component: () => import('view/calendar/DateComDes.vue'),
     meta: {
       title: '日期组件描述'
     }
   },
   {
     path: '/electronicClock',
-    component: () => import('../view/ElectronicClock.vue'),
+    component: () => import('view/ElectronicClock.vue'),
     meta: {
       title: '电子钟'
     }
   },
   {
     path: '/nameplate',
-    component: () => import('../view/Nameplate.vue'),
+    component: () => import('view/Nameplate.vue'),
     meta: {
       title: '铭牌',
       keepAlive: false

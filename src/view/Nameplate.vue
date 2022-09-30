@@ -29,8 +29,8 @@ export default {
     return {
       employeeName: '张三',
       employeeNumber: '0000666666/zwx1122345',
-      logoUrl: require('../assets/img/chinasoftLogo.png'),
-      purposeUrl: require('../assets/img/chinasoftPurpose.png')
+      logoUrl: require('assets/img/chinasoftLogo.png'),
+      purposeUrl: require('assets/img/chinasoftPurpose.png')
     }
   },
   methods: {

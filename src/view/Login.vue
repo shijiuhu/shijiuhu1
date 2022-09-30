@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import userInfo from '../assets/json/UserInfo.json'
+import userInfo from 'assets/json/UserInfo.json'
 
 export default {
   name: 'Login',
@@ -172,10 +172,10 @@ export default {
       background-color: #fff;
     }
     #username {
-      background: url("../assets/img/email.png") 23px 11px no-repeat;
+      background: url("assets/img/email.png") 23px 11px no-repeat;
     }
     #password {
-      background: url("../assets/img/password.png") 23px 11px no-repeat;
+      background: url("assets/img/password.png") 23px 11px no-repeat;
     }
     .reg-bar {
       width: 360px;

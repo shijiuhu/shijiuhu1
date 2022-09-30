@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import Tree from '../../components/Tree.vue'
-import { request } from '../../network/index.js';
+import Tree from 'components/Tree.vue'
+import { request } from 'network/index.js';
 
 import treeList from './provinceTree.js'
 
