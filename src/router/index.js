@@ -15,7 +15,10 @@ const routes = [
   },
   {
     path: '/home',
-    component: () => import('../view/Home.vue')
+    component: () => import('../view/Home.vue'),
+    meta: {
+      title: '首页'
+    }
   },
   {
     path: '/questionNaire',
@@ -51,7 +54,10 @@ const routes = [
   },
   {
     path: '/testMore',
-    component: () => import('../view/TestMore.vue')
+    component: () => import('../view/TestMore.vue'),
+    meta: {
+      title: '测试更多'
+    }
   },
   {
     path: '/provinceTree',
