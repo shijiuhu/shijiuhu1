@@ -25,6 +25,22 @@
     </div>
 
     <div>
+      <div class="title">好的案例</div>
+      <div class="content">
+        <span class="contentItem devCom" @click="toMarkdownEditor">Markdown编辑器</span>
+        <span class="contentItem devCom" @click="toGetData">获取数据</span>
+        <span class="contentItem devCom" @click="toSortGrid">带有排序和过滤器的网格</span>
+        <span class="contentItem devCom" @click="toTreeView">树状视图</span>
+        <span class="contentItem devCom" @click="toSvgImage">SVG图像</span>
+        <span class="contentItem devCom" @click="toModalBox">带过渡动效的模态框</span>
+        <span class="contentItem devCom" @click="toTransitionGroup">带过渡动效的列表</span>
+        <span class="contentItem devCom" @click="toTodoMVC">todoMVC</span>
+        <span class="contentItem devCom" @click="toTempConverter">温度转换器</span>
+        <span class="contentItem devCom" @click="toTimer">计时器</span>
+      </div>
+    </div>
+
+    <div>
       <div class="title">其他功能测试</div>
       <div class="content">
         <span class="contentItem devCom" @click="getEnvironment">获取本地开发或生产环境</span>
@@ -112,6 +128,46 @@ export default {
       this.$router.push('/nameplate')
     },
 
+    toMarkdownEditor() {
+      this.$router.push('/markdownEditor')
+    },
+
+    toGetData() {
+      this.$router.push('/getData')
+    },
+
+    toSortGrid() {
+      this.$router.push('/sortGrid')
+    },
+
+    toTreeView() {
+      this.$router.push('/treeView')
+    },
+
+    toSvgImage() {
+      this.$router.push('/svgImage')
+    },
+
+    toModalBox() {
+      this.$router.push('/modalBox')
+    },
+
+    toTransitionGroup() {
+      this.$router.push('/transitionGroup')
+    },
+
+    toTodoMVC() {
+      this.$router.push('/todoMVC')
+    },
+
+    toTempConverter() {
+      this.$router.push('/tempConverter')
+    },
+
+    toTimer() {
+      this.$router.push('/timer')
+    },
+
     getEnvironment() {
       this.localEnvironment = process.env.NODE_ENV;
       console.log(process.env, "--------this.localEnvironment");
@@ -150,18 +206,18 @@ export default {
 }
 
 .content {
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
   text-align: center;
-  width: 60%;
-  margin: 0 auto;
+  width: 100%;
   height: 50px;
   line-height: 50px;
 }
 
 .contentItem {
-  flex: 1;
   border: 1px solid black;
   color: blue;
+  padding: 0 5px;
 }
 
 .devCom:hover {

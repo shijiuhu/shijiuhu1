@@ -104,6 +104,76 @@ const routes = [
       title: '铭牌',
       keepAlive: false
     }
+  },
+  {
+    path: '/markdownEditor',
+    component: () => import('view/MarkdownEditor.vue'),
+    meta: {
+      title: 'Markdown编辑器'
+    }
+  },
+  {
+    path: '/getData',
+    component: () => import('view/GetData.vue'),
+    meta: {
+      title: '获取数据'
+    }
+  },
+  {
+    path: '/sortGrid',
+    component: () => import('view/sortGrid/SortGrid.vue'),
+    meta: {
+      title: '带有排序和过滤器的网格'
+    }
+  },
+  {
+    path: '/treeView',
+    component: () => import('view/treeView/TreeView.vue'),
+    meta: {
+      title: '树状视图'
+    }
+  },
+  {
+    path: '/svgImage',
+    component: () => import('view/svgImage/SvgImage.vue'),
+    meta: {
+      title: 'SVG图像'
+    }
+  },
+  {
+    path: '/modalBox',
+    component: () => import('view/modalBox/ModalBox.vue'),
+    meta: {
+      title: '带过渡动效的模态框'
+    }
+  },
+  {
+    path: '/transitionGroup',
+    component: () => import('view/TransitionGroup.vue'),
+    meta: {
+      title: '带过渡动效的列表'
+    }
+  },
+  {
+    path: '/todoMVC',
+    component: () => import('view/todoMVC/TodoMVC.vue'),
+    meta: {
+      title: 'TodoMVC'
+    }
+  },
+  {
+    path: '/tempConverter',
+    component: () => import('view/TempConverter.vue'),
+    meta: {
+      title: '温度转换器'
+    }
+  },
+  {
+    path: '/timer',
+    component: () => import('view/Timer.vue'),
+    meta: {
+      title: '计时器'
+    }
   }
 ]
 

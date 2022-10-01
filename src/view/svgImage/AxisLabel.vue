@@ -1,0 +1,27 @@
+<template>
+  <text :x="point.x" :y="point.y">{{stat.label}}</text>
+</template>
+
+<script>
+import { valueToPoint } from './util.js'
+
+export default {
+  props: {
+    stat: Object,
+    index: Number,
+    total: Number
+  },
+  computed: {
+    point: function () {
+      return valueToPoint(+this.stat.value + 10, this.index, this.total)
+    }
+  }
+}
+</script>
+
+<style scoped>
+text {
+  font-size: 10px;
+  fill: #666;
+}
+</style>
