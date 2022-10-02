@@ -174,6 +174,13 @@ const routes = [
     meta: {
       title: '计时器'
     }
+  },
+  {
+    path: '/svgDemo',
+    component: () => import('view/svgDemo/SvgDemo'),
+    meta: {
+      title: 'SVG的使用示例'
+    }
   }
 ]
 

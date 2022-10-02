@@ -77,6 +77,7 @@
             <span class="contentItem devCom" @click="getLocalJson">获取本地json文件</span>
             <span class="contentItem devCom" @click="staticSrc">img调用静态src</span>
             <span class="contentItem devCom" @click="showDateComDes">时间插件查看</span>
+            <span class="contentItem devCom" @click="toComponents('/svgDemo')">SVG的使用示例</span>
           </div>
         </fieldset>
       </li>
