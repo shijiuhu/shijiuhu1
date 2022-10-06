@@ -3,6 +3,7 @@
     <ol>
       <li>
         <fieldset>
+
           <legend class="title">为了方便查找经常访问的网页，这里列举出来！</legend>
           <div class="content">
             <span v-for="item in oftenUseWebs" :key="item" class="contentItem">
@@ -78,6 +79,7 @@
             <span class="contentItem devCom" @click="staticSrc">img调用静态src</span>
             <span class="contentItem devCom" @click="showDateComDes">时间插件查看</span>
             <span class="contentItem devCom" @click="toComponents('/svgDemo')">SVG的使用示例</span>
+            <span class="contentItem devCom" @click="toComponents('/teleportTest')">Teleport功能测试</span>
           </div>
         </fieldset>
       </li>
@@ -110,7 +112,6 @@
         </li>
       </ul>
     </div>
-
   </div>
 </template>
 

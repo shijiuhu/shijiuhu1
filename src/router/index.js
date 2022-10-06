@@ -181,6 +181,13 @@ const routes = [
     meta: {
       title: 'SVG的使用示例'
     }
+  },
+  {
+    path: '/teleportTest',
+    component: () => import('view/modalBox/TeleportTest'),
+    meta: {
+      title: 'Teleport功能测试'
+    }
   }
 ]
 
