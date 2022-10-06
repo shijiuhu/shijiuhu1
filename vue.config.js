@@ -3,7 +3,7 @@ module.exports = {
   devServer: {
     // host: '127.0.0.1',
     // port: 8080,
-    open: true,
+    // open: true,
     // https: false,
     proxy: {
       '/provinceTree': {

@@ -92,9 +92,16 @@ const routes = [
   },
   {
     path: '/electronicClock',
-    component: () => import('view/ElectronicClock.vue'),
+    component: () => import('view/electronicClock/ElectronicClock.vue'),
     meta: {
       title: '电子钟'
+    }
+  },
+  {
+    path: '/electronicClock2',
+    component: () => import('view/electronicClock/ElectronicClock2.vue'),
+    meta: {
+      title: '电子钟2-网上案例'
     }
   },
   {

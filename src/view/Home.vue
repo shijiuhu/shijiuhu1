@@ -141,6 +141,7 @@ export default {
         { name: '随机数', path: '/random' },
         { name: '日历时间', path: '/calendar' },
         { name: '电子钟', path: '/electronicClock' },
+        { name: '电子钟2', path: '/electronicClock2' },
         { name: '铭牌', path: '/nameplate' },
       ],
       goodExamples: [
