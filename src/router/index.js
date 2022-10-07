@@ -112,6 +112,13 @@ const routes = [
     }
   },
   {
+    path: '/mixedClock',
+    component: () => import('view/MixedClock.vue'),
+    meta: {
+      title: '混合时钟'
+    }
+  },
+  {
     path: '/nameplate',
     component: () => import('view/Nameplate.vue'),
     meta: {
