@@ -105,6 +105,13 @@ const routes = [
     }
   },
   {
+    path: '/rouletteClock',
+    component: () => import('view/RouletteClock.vue'),
+    meta: {
+      title: '轮盘时钟'
+    }
+  },
+  {
     path: '/nameplate',
     component: () => import('view/Nameplate.vue'),
     meta: {

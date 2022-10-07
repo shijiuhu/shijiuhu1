@@ -142,6 +142,7 @@ export default {
         { name: '日历时间', path: '/calendar' },
         { name: '电子钟', path: '/electronicClock' },
         { name: '电子钟2', path: '/electronicClock2' },
+        { name: '轮盘时钟', path: '/rouletteClock' },
         { name: '铭牌', path: '/nameplate' },
       ],
       goodExamples: [
