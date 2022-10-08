@@ -209,6 +209,13 @@ const routes = [
     meta: {
       title: 'Teleport功能测试'
     }
+  },
+  {
+    path: '/CURD',
+    component: () => import('view/CURD.vue'),
+    meta: {
+      title: 'CURD'
+    }
   }
 ]
 

@@ -157,6 +157,7 @@ export default {
         { name: 'todoMVC', path: '/todoMVC' },
         { name: '温度转换器', path: '/tempConverter' },
         { name: '计时器', path: '/timer' },
+        { name: 'CURD', path: '/CURD' },
       ],
       vueWebSites: [
         { name: 'Vue.js中文官网', url: 'https://cn.vuejs.org/', title: '' },
