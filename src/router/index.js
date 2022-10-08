@@ -223,6 +223,13 @@ const routes = [
     meta: {
       title: '画圆'
     }
+  },
+  {
+    path: '/cellTable',
+    component: () => import('view/cellTable/CellTable.vue'),
+    meta: {
+      title: '单元格'
+    }
   }
 ]
 

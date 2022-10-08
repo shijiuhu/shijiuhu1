@@ -159,6 +159,7 @@ export default {
         { name: '计时器', path: '/timer' },
         { name: 'CURD', path: '/CURD' },
         { name: '画圆', path: '/drawCircle' },
+        { name: '单元格', path: '/cellTable' },
       ],
       vueWebSites: [
         { name: 'Vue.js中文官网', url: 'https://cn.vuejs.org/', title: '' },
