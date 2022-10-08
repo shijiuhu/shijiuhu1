@@ -216,6 +216,13 @@ const routes = [
     meta: {
       title: 'CURD'
     }
+  },
+  {
+    path: '/drawCircle',
+    component: () => import('view/DrawCircle.vue'),
+    meta: {
+      title: '画圆'
+    }
   }
 ]
 
