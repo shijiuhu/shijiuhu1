@@ -1,27 +1,26 @@
 <template>
 		<div id="root">
-			<div class="s" 
+			<div class="s" v-for="(v,k) in 60" :key="k"
 			:class="{xx:60-v==s}"
-			v-for="(v,k) in 60"
 			:style="{transform:'translate('+xc(sr,v+s,60)+'px,'+yc(sr,v+s,60)+'px) rotate('+dg(v+s,60)+'deg)'}">{{zh(60-v,1)}}秒</div>
 			
-			<div class="i" v-for="(v,k) in 60"
+			<div class="i" v-for="(v,k) in 60" :key="k"
 			:class="{xx:60-v==i}"
 			:style="{transform:'translate('+xc(ir,v+i,60)+'px,'+yc(ir,v+i,60)+'px) rotate('+dg(v+i,60)+'deg)'}">{{zh(60-v,1)}}分</div>
 			
-			<div class="h" v-for="(v,k) in 24"
+			<div class="h" v-for="(v,k) in 24" :key="k"
 			:class="{xx:24-v==h}"
 			:style="{transform:'translate('+xc(hr,v+h,24)+'px,'+yc(hr,v+h,24)+'px) rotate('+dg(v+h,24)+'deg)'}">{{zh(24-v,1)}}时</div>
 			
-			<div class="w" v-for="(v,k) in 7"
+			<div class="w" v-for="(v,k) in 7" :key="k"
 			:class="{xx:7-v==w}"
 			:style="{transform:'translate('+xc(wr,v+w,7)+'px,'+yc(wr,v+w,7)+'px) rotate('+dg(v+w,7)+'deg)'}">星期{{wk[7-v]}}</div>
 			
-			<div class="d" v-for="(v,k) in 31"
+			<div class="d" v-for="(v,k) in 31" :key="k"
 			:class="{xx:31-k==d}"
 			:style="{transform:'translate('+xc(dr,k+d,31)+'px,'+yc(dr,k+d,31)+'px) rotate('+dg(k+d,31)+'deg)'}">{{zh(31-k,1)}}日</div>
 			
-			<div class="m" v-for="(v,k) in 12"
+			<div class="m" v-for="(v,k) in 12" :key="k"
 			:class="{xx:12-k==m+1}"
 			:style="{transform:'translate('+xc(mr,k+m+1,12)+'px,'+yc(mr,k+m+1,12)+'px) rotate('+dg(k+m+1,12)+'deg)'}">{{zh(12-k,1)}}月</div>
 			
@@ -68,11 +67,11 @@ export default {
   },
   methods: {
     xc(r,k,l) {
-      return r * Math.cos(2*k*this.PI/l) 
+      return r * Math.cos(2 * k * this.PI / l) 
     },
 
     yc(r,k,l) {
-      return r * Math.sin(2*k*this.PI/l) 
+      return r * Math.sin(2 * k * this.PI / l) 
     },
 
     dg(k,l) {

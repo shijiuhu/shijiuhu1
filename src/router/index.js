@@ -106,14 +106,14 @@ const routes = [
   },
   {
     path: '/rouletteClock',
-    component: () => import('view/RouletteClock.vue'),
+    component: () => import('view/clock/RouletteClock.vue'),
     meta: {
       title: '轮盘时钟'
     }
   },
   {
     path: '/mixedClock',
-    component: () => import('view/MixedClock.vue'),
+    component: () => import('view/clock/MixedClock.vue'),
     meta: {
       title: '混合时钟'
     }
