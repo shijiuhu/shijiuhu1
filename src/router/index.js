@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/questionNaire',
-    component: () => import('view/QuestionNaire.vue'),
+    component: () => import('view/other/QuestionNaire.vue'),
     meta: {
       title: '调查问卷',
       keepAlive: false
@@ -54,7 +54,7 @@ const routes = [
   },
   {
     path: '/testMore',
-    component: () => import('view/TestMore.vue'),
+    component: () => import('view/other/TestMore.vue'),
     meta: {
       title: '测试更多'
     }
@@ -69,7 +69,7 @@ const routes = [
   },
   {
     path: '/random',
-    component: () => import('view/Random.vue'),
+    component: () => import('view/other/Random.vue'),
     meta: {
       title: '随机数',
       keepAlive: false
@@ -92,14 +92,14 @@ const routes = [
   },
   {
     path: '/electronicClock',
-    component: () => import('view/electronicClock/ElectronicClock.vue'),
+    component: () => import('view/clock/ElectronicClock.vue'),
     meta: {
       title: '电子钟'
     }
   },
   {
     path: '/electronicClock2',
-    component: () => import('view/electronicClock/ElectronicClock2.vue'),
+    component: () => import('view/clock/ElectronicClock2.vue'),
     meta: {
       title: '电子钟2-网上案例'
     }
@@ -120,7 +120,7 @@ const routes = [
   },
   {
     path: '/nameplate',
-    component: () => import('view/Nameplate.vue'),
+    component: () => import('view/other/Nameplate.vue'),
     meta: {
       title: '铭牌',
       keepAlive: false
@@ -128,14 +128,14 @@ const routes = [
   },
   {
     path: '/markdownEditor',
-    component: () => import('view/MarkdownEditor.vue'),
+    component: () => import('view/other/MarkdownEditor.vue'),
     meta: {
       title: 'Markdown编辑器'
     }
   },
   {
     path: '/getData',
-    component: () => import('view/GetData.vue'),
+    component: () => import('view/other/GetData.vue'),
     meta: {
       title: '获取数据'
     }
@@ -170,7 +170,7 @@ const routes = [
   },
   {
     path: '/transitionGroup',
-    component: () => import('view/TransitionGroup.vue'),
+    component: () => import('view/other/TransitionGroup.vue'),
     meta: {
       title: '带过渡动效的列表'
     }
@@ -184,14 +184,14 @@ const routes = [
   },
   {
     path: '/tempConverter',
-    component: () => import('view/TempConverter.vue'),
+    component: () => import('view/other/TempConverter.vue'),
     meta: {
       title: '温度转换器'
     }
   },
   {
     path: '/timer',
-    component: () => import('view/Timer.vue'),
+    component: () => import('view/other/Timer.vue'),
     meta: {
       title: '计时器'
     }
@@ -212,14 +212,14 @@ const routes = [
   },
   {
     path: '/CURD',
-    component: () => import('view/CURD.vue'),
+    component: () => import('view/other/CURD.vue'),
     meta: {
       title: 'CURD'
     }
   },
   {
     path: '/drawCircle',
-    component: () => import('view/DrawCircle.vue'),
+    component: () => import('view/other/DrawCircle.vue'),
     meta: {
       title: '画圆'
     }

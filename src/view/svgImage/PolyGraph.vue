@@ -4,6 +4,7 @@
     <circle cx="100" cy="100" r="80"></circle>
     <axis-label
       v-for="(stat, index) in stats"
+      :key="stat"
       :stat="stat"
       :index="index"
       :total="stats.length"

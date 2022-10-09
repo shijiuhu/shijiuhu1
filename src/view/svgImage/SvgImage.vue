@@ -1,13 +1,10 @@
-<!--
-跟 Vue 说 Hello World！
--->
 <template>
   <svg width="200" height="200">
     <PolyGraph :stats="stats"></PolyGraph>
   </svg>
 
   <!-- 控件 -->
-  <div v-for="stat in stats">
+  <div v-for="stat in stats" :key="stat">
     <label>{{stat.label}}</label>
     <input type="range" v-model="stat.value" min="0" max="100">
     <span>{{stat.value}}</span>

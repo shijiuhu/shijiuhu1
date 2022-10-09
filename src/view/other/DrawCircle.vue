@@ -12,6 +12,7 @@ https://eugenkiss.github.io/7guis/tasks/#circle
 
     <circle
       v-for="circle in circles"
+      :key="circle"
       :cx="circle.cx"
       :cy="circle.cy"
       :r="circle.r"

@@ -6,13 +6,13 @@ https://eugenkiss.github.io/7guis/tasks/#cells
     <thead>
       <tr>
         <th></th>
-        <th v-for="c in cols">{{ c }}</th>
+        <th v-for="c in cols" :key="c">{{ c }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="i in cells[0].length">
+      <tr v-for="i in cells[0].length" :key="i">
         <th>{{ i - 1 }}</th>
-        <td v-for="(c, j) in cols">
+        <td v-for="(c, j) in cols" :key="j">
           <Cell :r="i - 1" :c="j"></Cell>
         </td>
       </tr>
