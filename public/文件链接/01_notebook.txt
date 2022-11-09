@@ -17,3 +17,11 @@ https://blog.csdn.net/u011109271/article/details/105095479
 
 font-awesome低版本icon图标查看地址
 https://www.bootcss.com/p/font-awesome/
+
+scss的使用
+https://blog.csdn.net/weixin_67745264/article/details/125141904
+https://blog.csdn.net/zhouzuoluo/article/details/81010331
+
+git submodule的使用
+https://blog.csdn.net/weixin_44901565/article/details/123086226
+https://www.cnblogs.com/flipped/p/15477222.html
