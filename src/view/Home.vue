@@ -135,7 +135,8 @@ export default {
         { name: 'LeetCode每日一练', url: 'https://leetcode.cn/problems/palindrome-number/'},
       ],
       developedComps: [
-        { name: '测试i18n等', path: '/testMore' },
+        { name: '杂七杂八', path: '/zaqizaba' },
+        { name: '测试i18n', path: '/testMore' },
         { name: '调查问卷', path: '/questionNaire' },
         { name: '省市树', path: '/provinceTree' },
         { name: '随机数', path: '/random' },

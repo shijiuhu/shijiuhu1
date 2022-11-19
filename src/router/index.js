@@ -21,6 +21,14 @@ const routes = [
     }
   },
   {
+    path: '/zaqizaba',
+    component: () => import('view/other/Zaqizaba.vue'),
+    meta: {
+      title: '杂七杂八',
+      keepAlive: false
+    }
+  },
+  {
     path: '/questionNaire',
     component: () => import('view/other/QuestionNaire.vue'),
     meta: {
